@@ -1,0 +1,14 @@
+---
+services:
+  nginx:
+    image: "nginx:latest"
+    volumes:
+      - "./nginx/:/etc/nginx/conf.d/"
+    ports:
+      - "8080:80"
+    networks:
+      - react
+
+networks:
+  react:
+    driver: bridge
