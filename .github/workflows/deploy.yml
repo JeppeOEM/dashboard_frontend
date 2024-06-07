@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [push]
 jobs:
   # test:
   #   ...
@@ -27,4 +27,4 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
       - name: Check out the source
-        run: ssh staging 'cd ~/dashboard_frontend && git fetch && git reset --hard origin/master'
+        run: ssh staging 'cd ~/dashboard_frontend && git pull'
