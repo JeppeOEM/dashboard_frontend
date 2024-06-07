@@ -12,10 +12,11 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     # needs: test
     steps:
+      - name: Print SSH Key
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | cut -c 1-20
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo SSH_KEY | truncate(20, "") 
           echo "$SSH_KEY" > ~/.ssh/gh
           chmod 600 ~/.ssh/gh
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/gh root@172.104.242.175 "echo lol"
