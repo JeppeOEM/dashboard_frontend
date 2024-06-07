@@ -16,6 +16,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "First two characters of SSH_KEY: ${SSH_KEY:0:8}"
+          echo "First two characters of SSH_KEY: ${SSH_USER:0:20}"
+          echo "First two characters of SSH_KEY: ${SSH_HOST:0:20}"
           echo "$SSH_KEY" > ~/.ssh/staging.key
           echo ""
           chmod 600 ~/.ssh/staging.key
