@@ -17,4 +17,4 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/gh
           chmod 600 ~/.ssh/gh
-          ssh -i ~/.ssh/gh {{secrets.SSH_USER}}@{{secrets.SSH_HOST}}
+          ssh -i ~/.ssh/gh root@172.104.242.175
