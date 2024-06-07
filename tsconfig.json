@@ -19,8 +19,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vitest/globals"] // enable the globals it, describe etc.
   },
-  "include": ["src,test"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
