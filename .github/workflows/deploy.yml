@@ -1,24 +1,30 @@
-name: SSH Known Hosts
-
-on:
-  push:
-    branches:
-      - main
-
+name: CI
+on: [push, pull_request]
 jobs:
-  ssh-known-hosts:
+  # test:
+  #   ...
+  deploy:
+    name: "Deploy to staging"
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    # needs: test
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Add known hosts
-        uses: kielabokkie/ssh-key-and-known-hosts-action@v1
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-host: your-server.com
-      - name: SSH to server
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
-      - name: Run git pull
+      - name: Configure SSH
         run: |
-          cd ~/dashboard_frontend
-          git pull
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+
+      - name: Check out the source
+        run: ssh staging 'cd ~/dashboard_frontend && git fetch && git reset --hard origin/master'
