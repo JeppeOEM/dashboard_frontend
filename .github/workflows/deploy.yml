@@ -15,18 +15,16 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "First two characters of SSH_KEY: ${SSH_KEY:0:15}"
+          echo "First two characters of SSH_KEY: ${SSH_KEY:0:25}"
           echo "First two characters of SSH_KEY: ${SSH_USER}"
           echo "First two characters of SSH_KEY: ${SSH_HOST}"
           echo "$SSH_KEY" > ~/.ssh/staging.key
           echo ""
           chmod 600 ~/.ssh/staging.key
           cat >>~/.ssh/config <<END
-          Host staging
+          Host home
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
           END
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
@@ -34,4 +32,4 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
       - name: Check out the source
-        run: ssh staging 'cd my-application && git fetch && git reset --hard origin/master'
+        run: ssh host 'echo "test"'
