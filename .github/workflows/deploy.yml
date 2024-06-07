@@ -17,7 +17,8 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/gh
           chmod 600 ~/.ssh/gh
-          ssh -i ~/.ssh/gh root@172.104.242.175
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/gh root@172.104.242.175 "echo lol"
         env:
           SSH_USER: ${{ secrets.STAGING_SSH_USER }}
           SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
