@@ -13,10 +13,4 @@ jobs:
     # needs: test
     steps:
       - name: ls -a via ssh
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: ls -a
-          host: ${{ secrets.SSH_HOST }}
-          username: root
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY}}
+        run: echo "test"
