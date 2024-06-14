@@ -15,7 +15,7 @@ const useGridQuery = () => {
   };
 
   return useQuery<GridItem[], Error>({
-    queryKey: ["gridItems"],
+    queryKey: ["gridItems"], // used as an identification for the query
     queryFn: fetchGridItems,
   });
 };
