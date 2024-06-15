@@ -32,7 +32,7 @@ logout: () => void;
 const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: !!localStorage.getItem("user"), // !! converts value to a boolean
   login: async (email: string, password: string) => {
-    const success = await _login(email, password);
+    const success: boolean = await _login(email, password);
     if (success) {
       set({ isAuthenticated: true });
     }
@@ -43,6 +43,8 @@ const useAuthStore = create<AuthStore>((set) => ({
     localStorage.removeItem("user");
     set({ isAuthenticated: false });
   },
+
+
 }));
 
 export default useAuthStore;

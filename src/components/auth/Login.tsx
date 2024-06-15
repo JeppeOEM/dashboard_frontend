@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 // import AuthService from "../../services/auth/AuthService";
-import useAuthStore from "./authStore";
-import { Button } from "@chakra-ui/react";
+import useAuthStore from "../../stores/authStore";
+import { Button, useDisclosure } from "@chakra-ui/react";
+import CustomModal from "../common/layouts/CustomModal";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+
+
   const {isAuthenticated, login, logout} = useAuthStore();
   const handleLogin = async () => {
     setLoading(true);
@@ -20,9 +24,6 @@ const LoginForm: React.FC = () => {
       setLoading(false);
     }
   };
-
-
-
 
   return (
     <div>
@@ -53,6 +54,10 @@ const LoginForm: React.FC = () => {
           Logout
         </Button>
       )}
+
+
+
+
     </div>
   );
 };
