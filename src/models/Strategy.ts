@@ -1,9 +1,13 @@
 import Tag from './Tag';
 import Indicator from './Indicator';
+import Coin from './Coin';
 export default interface Strategy {
-    base: string;
-    coins: string;
-    tags: Tag[];
-    indicators: Indicator[];
+    id?: number;
+    name: string;
+    base?: number;
+    coins?: Coin[];
+    tags?: Tag[];
+    indicators?: Indicator[];
+    description?: string;
 }
 

@@ -4,8 +4,17 @@ const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
 });
 
-const storedToken = localStorage.getItem('token');
+const storedToken = localStorage.getItem('user');
 const token = storedToken ? JSON.parse(storedToken) : null;
+console.log(token?.token)
+
+const getCsrfToken = () => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; csrftoken=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+};
+
+const csrfToken = getCsrfToken();
 
 // Define headers based on the token
 const headers = token ? {
@@ -13,8 +22,9 @@ const headers = token ? {
   'Authorization': `Token ${token.token}`,
 } : {
   'Content-Type': 'application/json',
+  'X-CSRFToken': csrfToken,
 };
-
+// res.data is json
 class ApiClient<T> {
   endpoint: string;
 

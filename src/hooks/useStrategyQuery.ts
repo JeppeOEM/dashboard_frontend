@@ -5,7 +5,9 @@ import Strategy from "../models/Strategy";
 
 const useStrategyQuery = () => {
   const fetchStrategies = async (): Promise<Strategy[]> => {
+
     const gridItemsData: Strategy[] = await StrategiesClient.getAll();
+
     return gridItemsData;
   };
 

@@ -1,23 +1,23 @@
-import { Grid, GridItem } from '@chakra-ui/react';
-import CustomGrid from '../components/CustomGrid';
-import GridDashboard from '../components/GridDashboard/GridDashboard';
-import SideBar from '../components/NavigationBars/SideBar';
+import SideBar from "../components/navigationBars/SideBar";
+import useStrategyQuery from "../hooks/useStrategyQuery";
 
 function StrategyPage() {
   return (
+<div>
+<SideBar></SideBar>
+</div>
+    //   <Grid
+    //     templateAreas={{
+    //       base: '"main"',
+    //       lg: '"main"',
+    //     }}
+    //   >
 
-      <Grid
-        templateAreas={{
-          base: '"main"',
-          lg: '"aside main main"',
-        }}
-      >
+    //     <GridItem gridArea={"main"}>
+    //       {/* <CustomGrid /> */}
 
-        <GridItem gridArea={"main"}>
-          <CustomGrid />
-        </GridItem>
-        <GridDashboard />
-      </Grid>
+    //     </GridItem>
+    //   </Grid>
 
   );
 }

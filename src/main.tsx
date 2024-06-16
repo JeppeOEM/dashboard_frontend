@@ -10,7 +10,6 @@ import CoinListPage from "./pages/CoinListPage.tsx";
 import CoinPage from "./pages/CoinPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import DashboardPage from "./pages/DashboardPage.tsx";
-import HomePage from "./pages/HomePage.tsx";
 import StrategyPage from "./pages/StrategyPage.tsx";
 
 //
@@ -47,6 +46,7 @@ const router = createBrowserRouter([
 
 ]);
 
+// when we pass this client we have access to cache 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
