@@ -11,17 +11,15 @@ import {
     VStack,
     useDisclosure,
   } from "@chakra-ui/react";
-  import strategyStore from "../../stores/strategyStore";
-  import useStrategyQuery from "../../hooks/useStrategyQuery";
+
   
   import { useState } from "react";
-  import Strategy from "../../models/Strategy";
-  import { useMutation } from "@tanstack/react-query";
-  import { StrategiesClient } from "../../services/ApiClientInstances";
+
   import CustomModal from "../common/layouts/CustomModal";
   import useIndicatorQuery from "../../hooks/useIndicatorQuery";
   import IndicatorDescription from "./IndicatorDescription";
 import { useAddIndicator } from "../../hooks/useAddIndicator";
+import { IoIosInformationCircleOutline } from 'react-icons/io';
 //   import IndicatorForm from "./IndicatorForm";
 
   
@@ -59,7 +57,8 @@ export default function SelectIndicators() {
       {data?.map((indicator, index) => (
         <ListItem key={indicator.id} paddingY="5px">
           {/* <HStack> */}
-            <VStack>
+            <HStack>
+            <div className="">
             <Button
               whiteSpace="normal"
               textAlign="left"
@@ -70,17 +69,21 @@ export default function SelectIndicators() {
               }}
               variant="link"
               fontSize="lg"
-            >
+              >
               {indicator.kind}
+            </Button>
+            <Button onClick={onOpen}>
+              <IoIosInformationCircleOutline size={24} />
             </Button>
             <CustomModal
             isOpen={isOpen}
             title="Create strategy"
             onClose={onClose}
-          >
+            >
             <IndicatorDescription onClose={onClose} description={indicator.description} ></IndicatorDescription>
-          </CustomModal>
-          </VStack>
+            </CustomModal>
+          </div>  
+          </HStack>
           {/* </HStack> */}
         </ListItem>
       ))}

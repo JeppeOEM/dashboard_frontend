@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stack, Input, Button, Text, Textarea } from '@chakra-ui/react';
 import useSignUp from '../../hooks/useSignUp';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Strategy from '../../models/Strategy';
 import { StrategiesClient } from '../../services/ApiClientInstances';
 import  { useCreateStrategy } from '../../hooks/useCreateStrategy';
@@ -29,7 +29,9 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
   };
 
 
-  
+  const queryClient = useQueryClient()
+
+
 
   const handleCreateStrat = async () => {
     if (description && name && quote) {
@@ -38,6 +40,7 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
       try {
         let created = await mutateAsync(newStrategy);
         if (created){
+            queryClient.invalidateQueries({ queryKey: ['strategies'] })
             onClose();
         }
       } catch (error) {

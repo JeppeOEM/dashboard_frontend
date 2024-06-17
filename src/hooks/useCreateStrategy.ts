@@ -6,6 +6,7 @@ import Strategy from "../models/Strategy";
 export const useCreateStrategy = () => {
   const mutation = useMutation({
     mutationFn: (newStrategy: Strategy) => StrategiesClient.post(newStrategy)
+    
   });
 
   return mutation.mutateAsync

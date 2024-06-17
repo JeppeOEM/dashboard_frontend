@@ -16,7 +16,7 @@ function DashboardPage() {
         <GridItem gridArea={"main"}>
           <CustomGrid />
         </GridItem>
-        <GridDashboard />
+        {/* <GridDashboard /> */}
       </Grid>
 
   );

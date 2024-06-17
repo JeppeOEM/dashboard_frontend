@@ -6,21 +6,21 @@ import Strategy from '../../models/Strategy';
 import { StrategiesClient } from '../../services/ApiClientInstances';
 import  { useCreateStrategy } from '../../hooks/useCreateStrategy';
 
-interface SignUpProps {
+interface Props {
   onClose: () => void;
   description: string;
 }
 
-const CreateStratForm: React.FC<SignUpProps> = ({ onClose, description }) => {
-
+const CreateStratForm: React.FC<Props> = ({ onClose, description }) => {
+const descriptionBr = description.replace(/\n/g, '<br />');
 
   
 
   return (
  <>
-<pre>
+<p>
   {description}
-</pre>
+</p>
 
 <Button onClick={onClose}>Close</Button>
  </>

@@ -18,11 +18,11 @@ function StrategyPage() {
       }}
     >
 
-      <Show above="lg">
+      {/* <Show above="lg"> */}
         <GridItem gridArea={"aside"} paddingX={1}>
         <SideBar></SideBar>
         </GridItem>
-      </Show>
+      {/* </Show> */}
       <GridItem gridArea={"main"}>
       </GridItem>
       {/* <GridDashboard /> */}
