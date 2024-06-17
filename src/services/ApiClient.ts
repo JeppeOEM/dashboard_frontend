@@ -6,7 +6,6 @@ const axiosInstance = axios.create({
 
 const storedToken = localStorage.getItem('user');
 const token = storedToken ? JSON.parse(storedToken) : null;
-console.log(token?.token)
 
 const getCsrfToken = () => {
   const value = `; ${document.cookie}`;

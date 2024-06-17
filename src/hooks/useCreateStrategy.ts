@@ -3,11 +3,11 @@ import {StrategiesClient} from "../services/ApiClientInstances"
 import Strategy from "../models/Strategy";
 // import {GridItemClass} from "../models/GridItem";
 
-const useStrategyMutation = (strategy: Strategy) => {
-  return useMutation({
-    mutationFn: () => StrategiesClient.post(strategy)
-
+export const useCreateStrategy = () => {
+  const mutation = useMutation({
+    mutationFn: (newStrategy: Strategy) => StrategiesClient.post(newStrategy)
   });
+
+  return mutation.mutateAsync
 };
 
-export default useStrategyMutation;

@@ -1,5 +1,4 @@
-export default interface Indicator {
-    name: string;
+export default interface Indicator {    
+    kind: string;
     settings: string;
-
 }

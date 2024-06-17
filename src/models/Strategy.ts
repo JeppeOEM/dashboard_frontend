@@ -1,5 +1,5 @@
 import Tag from './Tag';
-import Indicator from './Indicator';
+import Indicator from './IndicatorList';
 import Coin from './Coin';
 export default interface Strategy {
     id?: number;

@@ -1,0 +1,94 @@
+import {
+    Box,
+    Button,
+    Collapse,
+    HStack,
+    Image,
+    Input,
+    List,
+    ListItem,
+    Spinner,
+    useDisclosure,
+  } from "@chakra-ui/react";
+  import strategyStore from "../../stores/strategyStore";
+  import useStrategyQuery from "../../hooks/useStrategyQuery";
+  
+  import { useState } from "react";
+  import Strategy from "../../models/Strategy";
+  import { useMutation } from "@tanstack/react-query";
+  import { StrategiesClient } from "../../services/ApiClientInstances";
+  import CustomModal from "../common/layouts/CustomModal";
+  import CreateStratForm from "./CreateStratForm";
+
+  
+
+export default function SelectStrategyPanel() {
+
+    const {
+        isOpen: isCreateStratOpen,
+        onOpen: onCreateStratOpen,
+        onClose: onCreateStratClose,
+      } = useDisclosure();
+    
+    const {data, error, isLoading} = useStrategyQuery();
+    
+    const [strategy, setStrategy] = useState<Strategy | null>(null);
+    
+    const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
+    const [openIndex, setOpenIndex] = useState(-1);
+    const [isListVisible, setListVisible] = useState(true);
+
+    // Component logic goes here
+    return (
+        <>
+          {isLoading && <Spinner />}
+          {error && <div>{error.message}</div>}
+    
+    
+              <Button onClick={() => setListVisible(!isListVisible)}>
+      {isListVisible ? 'Close' : 'Open strategies'}
+    </Button>
+    {isListVisible && (
+          <div>
+          <Button onClick={onCreateStratOpen} colorScheme="teal">
+            Create new strategy
+          </Button>
+          <CustomModal
+            isOpen={isCreateStratOpen}
+            title="Create strategy"
+            onClose={onCreateStratClose}
+          >
+            <CreateStratForm onClose={onCreateStratClose} ></CreateStratForm>
+          </CustomModal>
+    
+              <List className="max-h-[200px] overflow-auto">
+      {data?.map((strategy, index) => (
+        <ListItem key={strategy.id} paddingY="5px">
+          <HStack>
+            <Button
+              whiteSpace="normal"
+              textAlign="left"
+              onClick={() => {
+                setOpenIndex(index === openIndex ? -1 : index);
+                if (typeof strategy.id === 'number') {
+                  setStrategyId(strategy.id);
+                }
+              }}
+              variant="link"
+              fontSize="lg"
+            >
+              {strategy.name}
+            </Button>
+            <Collapse in={openIndex === index}>
+            <Box h="10px" w="10px" borderRadius="50%" bg="black" />
+            </Collapse>
+          </HStack>
+        </ListItem>
+      ))}
+    </List>
+    </div>
+    )}
+        </>
+      );
+    };
+    

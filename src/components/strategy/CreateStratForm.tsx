@@ -4,6 +4,7 @@ import useSignUp from '../../hooks/useSignUp';
 import { useMutation } from '@tanstack/react-query';
 import Strategy from '../../models/Strategy';
 import { StrategiesClient } from '../../services/ApiClientInstances';
+import  { useCreateStrategy } from '../../hooks/useCreateStrategy';
 
 interface SignUpProps {
   onClose: () => void;
@@ -13,6 +14,7 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
   const [description, setDescription] = useState('');
   const [name, setName] = useState('');
   const [quote, setQuote] = useState("");
+  const mutateAsync  = useCreateStrategy();
 
   const descriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
@@ -26,9 +28,7 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
     setQuote(e.target.value);
   };
 
-  const {mutate} = useMutation({
-    mutationFn: (newStrategy: Strategy) => StrategiesClient.post(newStrategy)
-  })
+
   
 
   const handleCreateStrat = async () => {
@@ -36,7 +36,10 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
       const newStrategy = { name, description, quote };
       console.log(newStrategy)
       try {
-        mutate(newStrategy);
+        let created = await mutateAsync(newStrategy);
+        if (created){
+            onClose();
+        }
       } catch (error) {
         console.error('Mutation failed', error);
       }
