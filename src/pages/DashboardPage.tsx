@@ -1,7 +1,7 @@
 import { Grid, GridItem } from '@chakra-ui/react';
 import CustomGrid from '../components/CustomGrid';
 import GridDashboard from '../components/GridDashboard/GridDashboard';
-import SideBar from '../components/navigationBars/SideBar';
+import SideBar from '../components/strategy/SideBar';
 
 function DashboardPage() {
   return (

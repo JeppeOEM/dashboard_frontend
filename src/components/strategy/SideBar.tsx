@@ -17,13 +17,22 @@ import { useState } from "react";
 import Strategy from "../../models/Strategy";
 import { useMutation } from "@tanstack/react-query";
 import { StrategiesClient } from "../../services/ApiClientInstances";
+import CustomModal from "../common/layouts/CustomModal";
+import CreateStratForm from "./CreateStratForm";
 const SideBar = () =>{
+
+  const {
+    isOpen: isCreateStratOpen,
+    onOpen: onCreateStratOpen,
+    onClose: onCreateStratClose,
+  } = useDisclosure();
+
 const {data, error, isLoading} = useStrategyQuery();
 const [strategy, setStrategy] = useState<Strategy | null>(null);
-let mutation: any = null;
-if (strategy) {
-  mutation = useStrategyMutation(strategy);
-}
+// let mutation: any = null;
+// if (strategy) {
+//   mutation = useStrategyMutation(strategy);
+// }
 
 // const { isOpen, onOpen, onClose } = useDisclosure();
 // const [inputValue, setInputValue] = useState("");
@@ -46,9 +55,6 @@ if (strategy) {
 //   }
 // };
 
-const {mutate} = useMutation({
-  mutationFn: (newStrategy: Strategy) => StrategiesClient.post(newStrategy)
-})
 
 
 const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
@@ -57,27 +63,21 @@ const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
     <>
       {isLoading && <Spinner />}
       {error && <div>{error.message}</div>}
-      <Button onClick={()=>{mutate({
-        "base": 1,
-        "coins": [
-          {
-            "name": "BTC"
-          }
-        ],
-        "tags": [
-          {
-            "name": "string"
-          }
-        ],
-        "indicators": [
-          {
-            "name": "string",
-            "settings": "string"
-          }
-        ],
-        "description": "string",
-        "name": "11d"
-      })}}>Add Strategy</Button>
+      <div>
+            <Button onClick={onCreateStratOpen} colorScheme="teal">
+              Create new strategy
+            </Button>
+            <CustomModal
+              isOpen={isCreateStratOpen}
+              title="Create strategy"
+              onClose={onCreateStratClose}
+            >
+              <CreateStratForm onClose={onCreateStratClose} ></CreateStratForm>
+            </CustomModal>
+          </div>
+
+
+
       {/* {isOpen && (
         <Box>
           <Input value={inputValue} onChange={handleInputChange} />

@@ -1,4 +1,4 @@
-import SideBar from "../components/navigationBars/SideBar";
+import SideBar from "../components/strategy/SideBar";
 import useStrategyQuery from "../hooks/useStrategyQuery";
 
 function StrategyPage() {
