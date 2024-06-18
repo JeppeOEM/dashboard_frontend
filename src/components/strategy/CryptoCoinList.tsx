@@ -5,6 +5,9 @@ import {
   Button,
   Grid,
   GridItem,
+  HStack,
+  List,
+  ListItem,
   Spinner,
   Text,
   useDisclosure,
@@ -15,30 +18,17 @@ import SortCoinSelector from "../coinList/SortCoinSelector"
 import { useEffect, useState } from "react"
 import priceStore from "../../stores/priceStore"
 import usePriceQuery from "../../hooks/usePriceQuery"
+import { splitPairName } from "../../utils/splitPairName"
 
 export default function CryptoCoinList() {
   const { data: dataCoins, error: errorCoins, isLoading:isLoadingCoins } = useCoinQuery()
-  const {prices, selectedCoinId, setPrices, setNext, setPrevious, setResults, setCoinId, getByCoinId} = priceStore()
+  const { setCoinId} = priceStore()
   
   const [isListVisible, setListVisible] = useState(true)
 
 
-  const {data: dataPrices, error: errorPrices, isLoading: isLoadingPrices} = usePriceQuery(selectedCoinId)
- 
-  useEffect(() => {
-    if (selectedCoinId) {
-    console.log(selectedCoinId)
-    //usePriceQuery have access to page number from the priceStore
-    console.log(dataPrices)
-    console.log(dataCoins)
-    // if (data) {
-    // setNext(data.next)
-    // setPrevious(data.previous)
-    // setResults(data.results)
 
-    // }
-    }
-}, [selectedCoinId])
+
 
 
 
@@ -66,33 +56,45 @@ export default function CryptoCoinList() {
         />
       </Button>
       {isListVisible && (
-        <div>
-
-   
-
-        <div>
-
-
-          <div className="max-h-[300px] lg:h-screen overflow-auto ">
-            <ul>
-              {dataCoins?.map((coin) => (
-                <li key={coin.id} className="p-4 hover:bg-gray-300">
-                <p onClick={() => setCoinId(coin.id)}>
-                    {coin.name}
-                </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/* <SortCoinSelector></SortCoinSelector> */}
-
-        </div>
-            
-                </div>
-      )}
-            <div className="p-3">
-                  <SearchCoin></SearchCoin>
-                </div>
+  <div>
+    <div>
+      <List
+        maxHeight="300px"
+        bg="gray.300"
+        className="overflow-auto"
+        color="black"
+        borderRadius="md"
+        border="1px solid gray.300"
+      >
+        {dataCoins?.map((coin) => (
+          <ListItem
+            key={coin.id}
+            py={2}
+            px={3}
+            borderBottom="1px solid grey.500"
+            className="hover:bg-gray-300"
+          >
+            <HStack>
+              <Button
+                whiteSpace="normal"
+                textAlign="left"
+                onClick={() => setCoinId(coin.id)}
+                variant="link"
+                fontSize="md"
+                color="black"
+              >
+                {splitPairName(coin.name)}
+              </Button>
+            </HStack>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  </div>
+)}
+<div className="p-3">
+  <SearchCoin></SearchCoin>
+</div>
     </>
   )
 }

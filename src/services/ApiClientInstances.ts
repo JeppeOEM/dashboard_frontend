@@ -15,3 +15,4 @@ export const IndicatorTypesClient = new ApiClient<IndicatorList>('indicatortypes
 export const IndicatorClient = new ApiClient<Indicator>('strategy/indicators/')
 export const PricesClient = new ApiClient<PriceResponse>('prices') // using params
 export const CoinClient = new ApiClient<Coin>('coins/')
+export const CoinClientNoParam = new ApiClient<Coin>('coins')

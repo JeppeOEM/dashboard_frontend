@@ -7,8 +7,8 @@ interface priceStore {
 prices: Price[]
 selectedCoinId: number | null
 setPrices: (prices: Price[]) => void
-setNext: (next: string) => void
-setPrevious: (previous: string) => void
+setNext: (next: string | null) => void
+setPrevious: (previous: string | null) => void
 setResults: (results: Price[]) => void
 setCoinId: (id: number) => void
 getByCoinId: () => Price | undefined

@@ -11,7 +11,7 @@ export default function SideBar( {children} : SideBarProps) {
 
   return (
     <>
-    <Box bg="gray.100">
+    <Box bg="gray.100" h="100vh">
       {children}
     </Box>
     </>

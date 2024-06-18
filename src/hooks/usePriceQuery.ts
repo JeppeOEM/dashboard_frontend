@@ -4,14 +4,16 @@ import Strategy from "../models/Strategy"
 import Coin from "../models/Coin"
 import { PriceResponse } from "../models/PriceResponse"
 import priceStore from "../stores/priceStore"
-// import {GridItemClass} from "../models/GridItem"
 
 const usePriceQuery = (coinId:number) => {
   const {page} = priceStore()
-  const fetchPrices = async (): Promise<PriceResponse> => {
-    
-    const priceData: PriceResponse = await PricesClient.get(coinId,{ page: page } )
 
+  const fetchPrices = async (): Promise<PriceResponse> => {
+    console.log("COINID",coinId)
+
+
+    const priceData: PriceResponse = await PricesClient.get(coinId,{ page: page } )
+    // console.log(`Price Data!: ${priceData.results}`)
     return priceData
   }
 

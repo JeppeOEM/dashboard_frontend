@@ -1,8 +1,9 @@
 import { createChart, ColorType, IChartApi } from 'lightweight-charts'
 import React, { useEffect, useRef, useState } from 'react'
+import Timeseries from '../../models/Timeseries'
 
 interface ChartComponentProps {
-    data: number[]
+    data: Timeseries[]
     colors?: {
         backgroundColor?: string
         lineColor?: string
