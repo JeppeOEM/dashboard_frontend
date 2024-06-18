@@ -7,11 +7,11 @@ import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel";
 import SelectIndicators from "../components/strategy/SelectIndicators";
 import CryptoCoinList from "../components/strategy/CryptoCoinList";
 import strategyStore from "../stores/strategyStore";
+import { get } from "http";
 
 // import strategyStore from "../stores/strategyStore";
 function StrategyPage() {
-const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
-console.log(selectedStrategy)
+
 return (
 <div>
 

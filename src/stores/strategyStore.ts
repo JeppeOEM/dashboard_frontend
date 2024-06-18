@@ -6,81 +6,27 @@ import { StrategiesClient } from "../services/ApiClientInstances";
 
 interface StrategyStore {
 strategies: Strategy[];
-selectedStrategy: Strategy | null;
 selectedId: number | null;
-add: (name: string) => void;
-remove: (strategyId: number) => void;
-setStrategy: (strategyId: number) => void;
+setStrategies: (strategies: Strategy[]) => void;
 setStrategyId: (id: number) => void;
+getById: () => Strategy | undefined;
 }
 
-
-const strategyStore = create<StrategyStore>((set) => ({
+const strategyStore = create<StrategyStore>((set, get) => ({
     strategies: [],
-    selectedStrategy: null,
     selectedId: null,
-
+    setStrategies: (strategies: Strategy[]) => set(() => ({ strategies })),
     setStrategyId: (id: number) => set(() => ({ selectedId: id })),
-
-    add: async (name: string) => {
-        try {
-            const strategyName = { name };
-            // Update the database with the new strategy
-            StrategiesClient.post(strategyName).then(newStrategy => {
-                set((state) => {
-                    return {
-                        strategies: [...state.strategies, newStrategy],
-                    };
-                });
-            });
-        } catch (error) {
-            console.error('Error while adding item:', error);
-        }
-    },
-    remove: (strategyId) => {
-        try {
-            // Remove the strategy from the database
-            StrategiesClient.delete(strategyId).then(() => {
-                set((state) => {
-                    return {
-                        strategies: state.strategies.filter((strategy) => strategy.id !== strategyId),
-                    };
-                });
-            });
-        } catch (error) {
-            console.error('Error while removing item:', error);
-        }
-    },
-    setStrategy: (strategyId) => {
-        try {
-                console.log(strategyId)
-                set((state) => {
-                    return {
-                        selectedStrategy: state.strategies.find((strategy) => strategy.id === strategyId),
-                    };
-                });
-        } catch (error) {
-            console.error('Error while setting strategy:', error);
-        }
-    },
-    update: (strategyId: number, strategy: Strategy) => {
-        try {
-            StrategiesClient.update(strategyId, strategy).then(updatedStrategy => {
-                set((state) => {
-                    return {
-                        strategies: state.strategies.map((strategy) => {
-                            // checks if id is the same as the updated strategy
-                            // and replaces the strategy if it is
-                            return strategy.id === strategyId ? updatedStrategy : strategy;
-                        }),
-                    };
-                });
-            });
-        } catch (error) {
-            console.error('Error while updating strategy:', error);
-        }
-    }
-}));
+  
+    getById: () => {
+        const { strategies, selectedId } = get();
+        console.log(`Selected ID: ${selectedId}`);
+        console.log(`Strategies: ${JSON.stringify(strategies)}`);
+        const foundStrategy = strategies.find((strategy) => strategy.id === selectedId);
+        console.log(`Found strategy: ${JSON.stringify(foundStrategy)}`);
+        return foundStrategy;
+      },
+  }));
 
 export default strategyStore;
 

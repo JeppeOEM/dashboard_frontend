@@ -13,7 +13,7 @@ import {
   import strategyStore from "../../stores/strategyStore";
   import useStrategyQuery from "../../hooks/useStrategyQuery";
   
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import Strategy from "../../models/Strategy";
   import { useMutation } from "@tanstack/react-query";
   import { StrategiesClient } from "../../services/ApiClientInstances";
@@ -32,11 +32,20 @@ export default function SelectStrategyPanel() {
     
     const {data, error, isLoading} = useStrategyQuery();
     
-    const [strategy, setStrategy] = useState<Strategy | null>(null);
     
-    const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
+    const { strategies, selectedId, setStrategies, setStrategyId, getById } = strategyStore();
     const [openIndex, setOpenIndex] = useState(-1);
     const [isListVisible, setListVisible] = useState(true);
+    function lol() {
+     let test =  getById()
+    console.log(test);
+    }
+    useEffect(() => {
+      if (data) {
+          setStrategies(data);
+      }
+  }, [data]);
+
 
     // Component logic goes here
     return (
@@ -50,6 +59,9 @@ export default function SelectStrategyPanel() {
     </Button>
     {isListVisible && (
           <div>
+          <Button onClick={lol} colorScheme="teal">
+            getByid
+          </Button>
           <Button onClick={onCreateStratOpen} colorScheme="teal">
             Create new strategy
           </Button>
@@ -70,11 +82,11 @@ export default function SelectStrategyPanel() {
               textAlign="left"
               onClick={() => {
                 setOpenIndex(index === openIndex ? -1 : index);
-                console.log(strategy.id)
+                console.log(strategy.id);
                 if (typeof strategy.id === 'number') {
-                  console.log(strategy.id)
+                  console.log(strategy.id);
                   setStrategyId(strategy.id);
-                  setStrategy(strategy);
+
                 }
               }}
               variant="link"
