@@ -38,7 +38,7 @@ class ApiClient<T> {
 
   get = (id: number, params?: any) => {
     return axiosInstance
-      .get<T>(`${this.endpoint}/${id}`, { params, headers })
+      .get<T>(`${this.endpoint}/${id}/`, { params, headers })
       .then((res) => res.data);
   };
   post = (data: T) => {

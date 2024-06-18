@@ -9,6 +9,7 @@ import CryptoCoinList from "../components/strategy/CryptoCoinList";
 import strategyStore from "../stores/strategyStore";
 import { get } from "http";
 import StrategyContent from "../components/strategy/StrategyContent";
+import { Chart } from "../components/charting/chart";
 
 // import strategyStore from "../stores/strategyStore";
 function StrategyPage() {
@@ -39,6 +40,7 @@ return (
         </GridItem>
       {/* </Show> */}
       <GridItem gridArea={"main"}>
+        <Chart></Chart>
         <StrategyContent></StrategyContent>
         <IndicatorSection></IndicatorSection>
       </GridItem>

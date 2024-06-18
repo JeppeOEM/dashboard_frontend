@@ -26,6 +26,7 @@ export default function CryptoCoinList() {
  
   useEffect(() => {
     if (selectedCoinId) {
+    console.log(selectedCoinId);
     //usePriceQuery have access to page number from the priceStore
     console.log(dataPrices)
     console.log(dataCoins);
