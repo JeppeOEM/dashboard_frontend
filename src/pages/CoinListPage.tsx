@@ -1,34 +1,48 @@
-import  {NavLink, Outlet} from 'react-router-dom';
-import CoinList from '../components/coinList/ListCoins';
-import { Box, Grid, List, ListItem, Spinner, Text } from "@chakra-ui/react";
-import useCoinQuery from '../hooks/useCoinQuery';
-
-
+import { NavLink, Outlet } from "react-router-dom";
+import CoinList from "../components/coinList/ListCoins";
+import { Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
+import useCoinQuery from "../hooks/useCoinQuery";
 
 export default function CoinListPage() {
   const { data, error, isLoading } = useCoinQuery();
-  return (
-    <div>
-    <div>
-          <>
-          {isLoading && <Spinner />}
-          {error && <div>{error.message}</div>}
-            <List>
 
-            {data?.map((coin) => (
-                <ListItem key={coin.id}>
-                 <NavLink key={coin.id} to={`/coins/${coin.name}`}>{coin.name}</NavLink>
-                </ListItem>
-            ))}
-            </List>
-          </>
-    </div>
-        {/* {coins.map((coin) => (
-            <NavLink className={({isActive})=>{
-              return isActive ? 'text-red-500' : '';
-            }} key={coin} to={`/coins/${coin}`}>{coin}</NavLink>
-        ))} */}
-        <Outlet />
-    </div>
+  return (
+    <>
+      <Grid
+        templateAreas={{
+          base: "main",
+          lg: `"aside main"`,
+        }}
+        templateColumns={{
+          base: "1fr",
+          lg: "200px 1fr",
+        }}
+      >
+        {isLoading && <Spinner />}
+        {error && <div>{error.message}</div>}
+
+        {/* <Show above="lg"> */}
+        <GridItem gridArea={"aside"} paddingX={1}>
+          <div className="flex">
+            <div className="h-screen overflow-auto">
+              <ul>
+                {data?.map((coin) => (
+                  <li key={coin.id} className="p-4 hover:bg-gray-300">
+                    <NavLink className="block" to={`/coins/${coin.name}`}>
+                      {coin.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          {/* <GridDashboard /> */}
+        </GridItem>
+        {/* </Show> */}
+        <GridItem gridArea={"main"}>
+          <Outlet />
+        </GridItem>
+      </Grid>
+    </>
   );
 }
