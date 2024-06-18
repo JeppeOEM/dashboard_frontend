@@ -1,4 +1,11 @@
-import { Button, HStack, Image, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  HStack,
+  Image,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import logo from "../../assets/react.svg";
 import ColorModeSwitch from "../ColorModeSwitch";
 import { Link } from "react-router-dom";
@@ -6,6 +13,7 @@ import CustomModal from "../common/layouts/CustomModal";
 import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignUpForm";
 import useAuthStore from "../../stores/authStore";
+import { useColorMode } from "@chakra-ui/react";
 const NavBar = () => {
   const {
     isOpen: isLoginOpen,
@@ -18,62 +26,86 @@ const NavBar = () => {
     onClose: onSignUpClose,
   } = useDisclosure();
 
-  const { isAuthenticated, logout } = useAuthStore();
 
+  // Inside your component
+  const { colorMode } = useColorMode();
+  const { isAuthenticated, logout } = useAuthStore();
+  const bg = useColorModeValue("teal.500", "gray.800");
   return (
     <>
-      <HStack justifyContent="space-between">
-        <Link to="/">
-          <Image src={logo} alt="React Logo" boxSize="50px" />
-        </Link>
-        <Link to="/backtest">
-        Backtest Strategies
-        </Link>
-        <Link to="/coins">
-        Coin list
-        </Link>
-        <Link to="/dashboard">
-        Dashboard
-        </Link>
-        <Link to="/home">
-        Home
-        </Link>
-        <ColorModeSwitch />
-        {!isAuthenticated && (
-          <div>
-            <Button onClick={onLoginOpen} colorScheme="teal">
-              Login
-            </Button>
-            <CustomModal
-              isOpen={isLoginOpen}
-              title="Login"
-              onClose={onLoginClose}
-            >
-              <LoginForm onClose={onLoginClose}></LoginForm>
-            </CustomModal>
-          </div>
-        )}
-        {!isAuthenticated && (
-          <div>
-            <Button onClick={onSignUpOpen} colorScheme="teal">
-              Sign up
-            </Button>
-            <CustomModal
-              isOpen={isSignUpOpen}
-              onClose={onSignUpClose}
-              title="Create Account"
-            >
-              <SignUpForm onClose={onSignUpClose}></SignUpForm>
-            </CustomModal>
-          </div>
-        )}
+      <Flex
+        as="nav"
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        padding="0.8rem"
+        bg={bg}
+        color="white"
+      >
+        <Flex align="center" mr={5} className="space-x-4">
+          <Link to="/" className="text-lg">
+            <Image src={logo} alt="React Logo" boxSize="30px" />
+          </Link>
+          {isAuthenticated && (
+            <Link to="/backtest" className="text-lg">
+              Backtest Strategies
+            </Link>
+          )}
+          <Link to="/coins" className="text-lg">
+            Coin list
+          </Link>
+          <Link to="/dashboard" className="text-lg">
+            Dashboard
+          </Link>
+          <Link to="/home" className="text-lg">
+            Home
+          </Link>
+        </Flex>
+        <Flex align="center">
+          <ColorModeSwitch />
+          {!isAuthenticated && (
+            <div>
+              <Button onClick={onLoginOpen} colorScheme="teal" ml={5}>
+                Login
+              </Button>
+              <CustomModal
+                isOpen={isLoginOpen}
+                title="Login"
+                onClose={onLoginClose}
+              >
+                <LoginForm onClose={onLoginClose}></LoginForm>
+              </CustomModal>
+            </div>
+          )}
+          {!isAuthenticated && (
+            <div>
+              <Button onClick={onSignUpOpen} colorScheme="teal">
+                Sign up
+              </Button>
+              <CustomModal
+                isOpen={isSignUpOpen}
+                onClose={onSignUpClose}
+                title="Create Account"
+              >
+                <SignUpForm onClose={onSignUpClose}></SignUpForm>
+              </CustomModal>
+            </div>
+          )}
 
-        {isAuthenticated && (
-          <Button colorScheme="red" onClick={() => logout()}>
-            Logout
-          </Button>
-        )}
-      </HStack>
+          {isAuthenticated && (
+            <div>
+<Button
+  colorScheme={colorMode === "dark" ? "black" : "white"}
+  color={colorMode === "dark" ? "white" : "black"}
+  ml={4}
+  onClick={() => logout()}
+>
+  Log out
+</Button>
+            </div>
+          )}
+        </Flex>
+      </Flex>
     </>
   );
 };

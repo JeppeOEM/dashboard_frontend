@@ -47,7 +47,13 @@ const router = createBrowserRouter([
 ]);
 
 // when we pass this client we have access to cache 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

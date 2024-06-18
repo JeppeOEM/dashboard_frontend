@@ -10,6 +10,7 @@ import {
   Spinner,
   VStack,
   useDisclosure,
+  Flex,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -85,18 +86,24 @@ export default function SelectIndicators() {
                 {/* <HStack> */}
                 <HStack>
                   <div>
-                    <Button
-                      whiteSpace="normal"
-                      textAlign="left"
-                      onClick={() => addIndicator(indicator, selectedId)}
-                      variant="link"
-                      fontSize="lg"
+                  <Flex justifyContent="space-between" width="full">
+ 
+
+                  <Button
+                    whiteSpace="normal"
+                    textAlign="left"
+                    onClick={() => addIndicator(indicator, selectedId)}
+                    variant="link"
+                    fontSize="lg"
                     >
-                      {indicator.kind}
-                    </Button>
-                    <Button onClick={onOpen}>
-                      <IoIosInformationCircleOutline size={24} />
-                    </Button>
+                    {indicator.kind}
+                  </Button>
+                  
+                  <Button onClick={onOpen}>
+                    <IoIosInformationCircleOutline size={24} />
+                  </Button>
+  
+                </Flex>
                     <CustomModal
                       isOpen={isOpen}
                       title="Create strategy"

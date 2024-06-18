@@ -39,9 +39,6 @@ const useAuthStore = create<AuthStore>((set) => ({
     return success;
   },
   logout: () => {
-    const queryClient = useQueryClient();
-    queryClient.clear();
-    console.log(localStorage.getItem('user'))
     localStorage.removeItem("user");
     set({ isAuthenticated: false });
   },

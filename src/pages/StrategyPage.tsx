@@ -44,21 +44,7 @@ function StrategyPage() {
     { time: '2019-01-03', value: 31.98 },
     // Add more data as needed
 ];
-const [windowSize, setWindowSize] = useState();
 
-
-useEffect(() => {
-  const handleResize = () => {
-    // Update the state variable when the window is resized
-    setWindowSize(window.innerWidth);
-  };
-
-  window.addEventListener('resize', handleResize);
-
-  return () => {
-    window.removeEventListener('resize', handleResize);
-  };
-}, []);
 return (
 <div>
 

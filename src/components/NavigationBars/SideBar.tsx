@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 
 
 
@@ -10,8 +11,9 @@ export default function SideBar( {children} : SideBarProps) {
 
   return (
     <>
-    <h1>ddd</h1>
+    <Box bg="gray.100">
       {children}
+    </Box>
     </>
   );
 }
