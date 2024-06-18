@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import { Stack, Input, Button, Text, Textarea } from '@chakra-ui/react';
-import useSignUp from '../../hooks/useSignUp';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Strategy from '../../models/Strategy';
-import { StrategiesClient } from '../../services/ApiClientInstances';
-import  { useCreateStrategy } from '../../hooks/useCreateStrategy';
+import React, { useState } from 'react'
+import { Stack, Input, Button, Text, Textarea } from '@chakra-ui/react'
+import useSignUp from '../../hooks/useSignUp'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import Strategy from '../../models/Strategy'
+import { StrategiesClient } from '../../services/ApiClientInstances'
+import  { useCreateStrategy } from '../../hooks/useCreateStrategy'
 
 interface SignUpProps {
-  onClose: () => void;
+  onClose: () => void
 }
 
 const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
-  const [description, setDescription] = useState('');
-  const [name, setName] = useState('');
-  const [quote, setQuote] = useState("");
-  const mutateAsync  = useCreateStrategy();
+  const [description, setDescription] = useState('')
+  const [name, setName] = useState('')
+  const [quote, setQuote] = useState("")
+  const mutateAsync  = useCreateStrategy()
 
   const descriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
-  };
+    setDescription(e.target.value)
+  }
 
   const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+    setName(e.target.value)
+  }
 
   const quoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuote(e.target.value);
-  };
+    setQuote(e.target.value)
+  }
 
 
   const queryClient = useQueryClient()
@@ -35,19 +35,19 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
 
   const handleCreateStrat = async () => {
     if (description && name && quote) {
-      const newStrategy = { name, description, quote };
+      const newStrategy = { name, description, quote }
       console.log(newStrategy)
       try {
-        let created = await mutateAsync(newStrategy);
+        let created = await mutateAsync(newStrategy)
         if (created){
             queryClient.invalidateQueries({ queryKey: ['strategies'] })
-            onClose();
+            onClose()
         }
       } catch (error) {
-        console.error('Mutation failed', error);
+        console.error('Mutation failed', error)
       }
 
-    //   onClose();
+    //   onClose()
     }
   }
 
@@ -64,7 +64,7 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
         Create strategy
       </Button>
     </Stack>
-  );
-};
+  )
+}
 
-export default CreateStratForm;
+export default CreateStratForm

@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"
 
 interface GreetProps {
-  name: string;
+  name: string
 }
 
 const Greet: React.FC<GreetProps> = ({ name }) => {
-  return <h1>Hello, {name}!</h1>;
-};
+  return <h1>Hello, {name}!</h1>
+}
 
-export default Greet;
+export default Greet

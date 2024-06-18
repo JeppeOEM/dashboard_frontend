@@ -1,12 +1,12 @@
-import { NavLink, Outlet } from "react-router-dom";
-import CoinList from "../components/coinList/ListCoins";
-import { Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
-import useCoinQuery from "../hooks/useCoinQuery";
-import SearchCoin from "../components/coinList/SearchCoin";
-import SortCoinSelector from "../components/coinList/SortCoinSelector";
+import { NavLink, Outlet } from "react-router-dom"
+import CoinList from "../components/coinList/ListCoins"
+import { Grid, GridItem, Spinner, Text } from "@chakra-ui/react"
+import useCoinQuery from "../hooks/useCoinQuery"
+import SearchCoin from "../components/coinList/SearchCoin"
+import SortCoinSelector from "../components/coinList/SortCoinSelector"
 
 export default function CoinListPage() {
-  const { data, error, isLoading } = useCoinQuery();
+  const { data, error, isLoading } = useCoinQuery()
 
   return (
     <>
@@ -40,5 +40,5 @@ export default function CoinListPage() {
 
   
     </>
-  );
+  )
 }

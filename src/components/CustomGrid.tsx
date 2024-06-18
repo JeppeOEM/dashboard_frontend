@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react"
 
 
 

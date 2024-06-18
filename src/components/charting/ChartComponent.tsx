@@ -1,15 +1,15 @@
-import { createChart, ColorType, IChartApi } from 'lightweight-charts';
-import React, { useEffect, useRef, useState } from 'react';
+import { createChart, ColorType, IChartApi } from 'lightweight-charts'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface ChartComponentProps {
-    data: number[];
+    data: number[]
     colors?: {
-        backgroundColor?: string;
-        lineColor?: string;
-        textColor?: string;
-        areaTopColor?: string;
-        areaBottomColor?: string;
-    };
+        backgroundColor?: string
+        lineColor?: string
+        textColor?: string
+        areaTopColor?: string
+        areaBottomColor?: string
+    }
 }
 
 export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
@@ -22,18 +22,18 @@ export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
             areaTopColor = '#2962FF',
             areaBottomColor = 'rgba(41, 98, 255, 0.28)',
         } = {},
-    } = props;
+    } = props
 
-    const chartContainerRef = useRef<HTMLDivElement>(null);
-    const chartRef = useRef<IChartApi | null>(null);
+    const chartContainerRef = useRef<HTMLDivElement>(null)
+    const chartRef = useRef<IChartApi | null>(null)
 
     useEffect(() => {
         const handleResize = () => {
             if (chartRef.current) {
                 console.log("dddddd")
-                chartRef.current.applyOptions({ width: chartContainerRef.current?.clientWidth });
+                chartRef.current.applyOptions({ width: chartContainerRef.current?.clientWidth })
             }
-        };
+        }
 
         chartRef.current = createChart(chartContainerRef.current!, {
             layout: {
@@ -42,22 +42,22 @@ export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
             },
             width: chartContainerRef.current?.clientWidth || 0,
             height: 300,
-        });
-        chartRef.current.timeScale().fitContent();
+        })
+        chartRef.current.timeScale().fitContent()
 
-        const newSeries = chartRef.current.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-        newSeries.setData(data);
+        const newSeries = chartRef.current.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor })
+        newSeries.setData(data)
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize)
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize)
 
             if (chartRef.current) {
-                chartRef.current.remove();
+                chartRef.current.remove()
             }
-        };
-    }, [chartContainerRef, data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]);
+        }
+    }, [chartContainerRef, data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor])
 
-    return <div ref={chartContainerRef} />;
-};
+    return <div ref={chartContainerRef} />
+}

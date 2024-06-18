@@ -6,11 +6,11 @@ export async function postJson(data: unknown): Promise<{ status: number}> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    });
+    })
 
-    return { status: response.status};
+    return { status: response.status}
   } catch (error) {
-    console.error('Error adding grid item:', error);
-    throw error; // throw to caller s
+    console.error('Error adding grid item:', error)
+    throw error // throw to caller s
   }
 }

@@ -1,7 +1,7 @@
-import { useEffect} from 'react';
-import { Box, Button, Grid, GridItem as ChakraGridItem } from '@chakra-ui/react';
+import { useEffect} from 'react'
+import { Box, Button, Grid, GridItem as ChakraGridItem } from '@chakra-ui/react'
 
-import useGridQuery from '../../hooks/useGridQuery';
+import useGridQuery from '../../hooks/useGridQuery'
 
 import useGridStore from './store.ts'
 
@@ -9,15 +9,15 @@ import useGridStore from './store.ts'
 
 const GridDashboard = () => {
 const { gridItems, add, remove, setGridItems } = useGridStore()
-const { data: gridItemsLoad, isLoading, error } = useGridQuery();
+const { data: gridItemsLoad, isLoading, error } = useGridQuery()
 //isLoading, error from the React Query
 
   useEffect(() => {
     if (gridItemsLoad) {
       // LOAD THEM HERE
-      // setGridItems(gridItemsLoad);
+      // setGridItems(gridItemsLoad)
     }
-  }, [gridItemsLoad, setGridItems]);
+  }, [gridItemsLoad, setGridItems])
 
   return (
     <Box>
@@ -41,7 +41,7 @@ const { data: gridItemsLoad, isLoading, error } = useGridQuery();
         ))}
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default GridDashboard;
+export default GridDashboard

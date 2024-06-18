@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -9,17 +9,17 @@ import {
   ModalCloseButton,
   Button,
   useBreakpointValue,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
 
 interface ModalLayoutProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  children: React.ReactNode
 }
 
 const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose, title, children }) => {
-  const isFullScreen = useBreakpointValue({ base: true, md: false });
+  const isFullScreen = useBreakpointValue({ base: true, md: false })
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={isFullScreen ? 'full' : 'md'}>
@@ -35,7 +35,7 @@ const ModalLayout: React.FC<ModalLayoutProps> = ({ isOpen, onClose, title, child
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalLayout;
+export default ModalLayout

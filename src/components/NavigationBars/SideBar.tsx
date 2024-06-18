@@ -1,11 +1,11 @@
-import { Box } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react"
 
 
 
 
 
 interface SideBarProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 export default function SideBar( {children} : SideBarProps) {
 
@@ -15,5 +15,5 @@ export default function SideBar( {children} : SideBarProps) {
       {children}
     </Box>
     </>
-  );
+  )
 }

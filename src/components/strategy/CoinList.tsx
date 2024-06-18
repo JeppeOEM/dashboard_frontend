@@ -1,12 +1,12 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
 
 interface Coin {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 interface CoinListProps {
-  data: Coin[];
+  data: Coin[]
 }
 
 export default function CoinList({ data }: CoinListProps) {
@@ -22,5 +22,5 @@ export default function CoinList({ data }: CoinListProps) {
         ))}
       </ul>
     </div>
-  );
+  )
 }

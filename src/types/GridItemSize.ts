@@ -1,1 +1,1 @@
-export type GridItemSize = 'small' | 'medium' | 'large';
+export type GridItemSize = 'small' | 'medium' | 'large'

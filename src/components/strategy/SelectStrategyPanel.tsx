@@ -9,37 +9,37 @@ import {
   ListItem,
   Spinner,
   useDisclosure,
-} from "@chakra-ui/react";
-import strategyStore from "../../stores/strategyStore";
-import useStrategyQuery from "../../hooks/useStrategyQuery";
+} from "@chakra-ui/react"
+import strategyStore from "../../stores/strategyStore"
+import useStrategyQuery from "../../hooks/useStrategyQuery"
 
-import { useEffect, useState } from "react";
-import Strategy from "../../models/Strategy";
-import { useMutation } from "@tanstack/react-query";
-import { StrategiesClient } from "../../services/ApiClientInstances";
-import CustomModal from "../common/layouts/CustomModal";
-import CreateStratForm from "./CreateStratForm";
+import { useEffect, useState } from "react"
+import Strategy from "../../models/Strategy"
+import { useMutation } from "@tanstack/react-query"
+import { StrategiesClient } from "../../services/ApiClientInstances"
+import CustomModal from "../common/layouts/CustomModal"
+import CreateStratForm from "./CreateStratForm"
 
 export default function SelectStrategyPanel() {
   const {
     isOpen: isCreateStratOpen,
     onOpen: onCreateStratOpen,
     onClose: onCreateStratClose,
-  } = useDisclosure();
+  } = useDisclosure()
 
-  const { data, error, isLoading } = useStrategyQuery();
+  const { data, error, isLoading } = useStrategyQuery()
 
   const { strategies, selectedId, setStrategies, setStrategyId, getById } =
-    strategyStore();
+    strategyStore()
 
-  const [isListVisible, setListVisible] = useState(true);
+  const [isListVisible, setListVisible] = useState(true)
 
   // updates the client with new data everytime data changes
   useEffect(() => {
     if (data) {
-      setStrategies(data);
+      setStrategies(data)
     }
-  }, [data]);
+  }, [data])
 
   // Component logic goes here
   return (
@@ -63,8 +63,9 @@ export default function SelectStrategyPanel() {
           borderWidth="0 2px 2px 0"
           display="inline-block"
           padding="3px"
-          transform={isListVisible ? "rotate(-135deg)" : "rotate(45deg)"}
+          transform={isListVisible ? "rotate(45deg)": "rotate(-135deg)"}
           marginLeft="5px"
+          fontSize="lg"
         />
       </Button>
       {isListVisible && (
@@ -97,14 +98,14 @@ export default function SelectStrategyPanel() {
                     whiteSpace="normal"
                     textAlign="left"
                     onClick={() => {
-                      console.log(strategy.id);
+                      console.log(strategy.id)
                       if (typeof strategy.id === "number") {
-                        console.log(strategy.id);
-                        setStrategyId(strategy.id);
+                        console.log(strategy.id)
+                        setStrategyId(strategy.id)
                       }
                     }}
                     variant="link"
-                    fontSize="lg"
+                    fontSize="md"
                     color="black"
                   >
                     {strategy.name}
@@ -116,5 +117,5 @@ export default function SelectStrategyPanel() {
         </div>
       )}
     </>
-  );
+  )
 }

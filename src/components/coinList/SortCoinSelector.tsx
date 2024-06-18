@@ -1,19 +1,19 @@
-import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
+import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react"
+import { BsChevronDown } from "react-icons/bs"
 
-import coinQueryStore from "../../stores/coinQueryStore";
+import coinQueryStore from "../../stores/coinQueryStore"
 
 const SortSelector = () => {
-  const sortOrder = coinQueryStore((state) => state.coinQuery.sortOrder);
-  const setSortOrder = coinQueryStore((state) => state.setSortOrder);
+  const sortOrder = coinQueryStore((state) => state.coinQuery.sortOrder)
+  const setSortOrder = coinQueryStore((state) => state.setSortOrder)
 
   const sortOrders = [
     { value: "name", name: "Name" },
-  ];
+  ]
 
   const selectedSortOrder = sortOrders.find(
     (order) => order.value === sortOrder
-  );
+  )
 
   return (
     <Menu>
@@ -28,7 +28,7 @@ const SortSelector = () => {
         ))}
       </MenuList>
     </Menu>
-  );
-};
+  )
+}
 
-export default SortSelector;
+export default SortSelector

@@ -8,4 +8,4 @@ const TestCard = () => {
     )
 }
 
-export default TestCard;
+export default TestCard

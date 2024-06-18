@@ -1,9 +1,9 @@
-import { Box, Grid, List, ListItem, Spinner, Text } from "@chakra-ui/react";
-import useCoinQuery from "../../hooks/useCoinQuery";
+import { Box, Grid, List, ListItem, Spinner, Text } from "@chakra-ui/react"
+import useCoinQuery from "../../hooks/useCoinQuery"
 
 function CoinList() {
 
-const { data, error, isLoading } = useCoinQuery();
+const { data, error, isLoading } = useCoinQuery()
 return (
           <>
           {isLoading && <Spinner />}
@@ -17,7 +17,7 @@ return (
             ))}
             </List>
           </>
-);
+)
 }
 
 export default CoinList

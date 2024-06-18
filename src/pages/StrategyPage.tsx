@@ -1,18 +1,18 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
-import SideBar from "../components/navigationBars/SideBar";
-import useStrategyQuery from "../hooks/useStrategyQuery";
-import GridDashboard from "../components/GridDashboard/GridDashboard";
-import IndicatorSection from "../components/strategy/IndicatorSection";
-import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel";
-import SelectIndicators from "../components/strategy/SelectIndicators";
-import CryptoCoinList from "../components/strategy/CryptoCoinList";
-import strategyStore from "../stores/strategyStore";
-import { get } from "http";
-import StrategyContent from "../components/strategy/StrategyContent";
-import { ChartComponent } from "../components/charting/ChartComponent";
-import { useEffect, useState } from "react";
+import { Grid, GridItem, Show } from "@chakra-ui/react"
+import SideBar from "../components/navigationBars/SideBar"
+import useStrategyQuery from "../hooks/useStrategyQuery"
+import GridDashboard from "../components/GridDashboard/GridDashboard"
+import IndicatorSection from "../components/strategy/IndicatorSection"
+import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel"
+import SelectIndicators from "../components/strategy/SelectIndicators"
+import CryptoCoinList from "../components/strategy/CryptoCoinList"
+import strategyStore from "../stores/strategyStore"
+import { get } from "http"
+import StrategyContent from "../components/strategy/StrategyContent"
+import { ChartComponent } from "../components/charting/ChartComponent"
+import { useEffect, useState } from "react"
 
-// import strategyStore from "../stores/strategyStore";
+// import strategyStore from "../stores/strategyStore"
 function StrategyPage() {
   const initialData = [
     { time: '2018-12-22', value: 32.51 },
@@ -25,7 +25,7 @@ function StrategyPage() {
     { time: '2018-12-29', value: 23.92 },
     { time: '2018-12-30', value: 22.68 },
     { time: '2018-12-31', value: 22.67 },
-];
+]
 
   const chartProps = {
     data: initialData, // replace with actual data
@@ -36,14 +36,14 @@ function StrategyPage() {
       areaTopColor: '#2962FF',
       areaBottomColor: 'rgba(41, 98, 255, 0.28)',
     },
-  };
+  }
 
   const otherData = [
     { time: '2019-01-01', value: 30.11 },
     { time: '2019-01-02', value: 32.43 },
     { time: '2019-01-03', value: 31.98 },
     // Add more data as needed
-];
+]
 
 return (
 <div>
@@ -78,7 +78,7 @@ return (
 
     </Grid>
     </div>
-  );
+  )
 }
 
-export default StrategyPage;
+export default StrategyPage

@@ -1,7 +1,7 @@
-import { Grid, GridItem } from '@chakra-ui/react';
-import CustomGrid from '../components/CustomGrid';
-import GridDashboard from '../components/GridDashboard/GridDashboard';
-import SideBar from '../components/navigationBars/SideBar';
+import { Grid, GridItem } from '@chakra-ui/react'
+import CustomGrid from '../components/CustomGrid'
+import GridDashboard from '../components/GridDashboard/GridDashboard'
+import SideBar from '../components/navigationBars/SideBar'
 
 function DashboardPage() {
   return (
@@ -19,7 +19,7 @@ function DashboardPage() {
         {/* <GridDashboard /> */}
       </Grid>
 
-  );
+  )
 }
 
-export default DashboardPage;
+export default DashboardPage

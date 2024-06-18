@@ -10,25 +10,27 @@ import {
   Spinner,
   VStack,
   useDisclosure,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"
 
-import { useState } from "react";
+import { useState } from "react"
 
-import CustomModal from "../common/layouts/CustomModal";
-import useIndicatorListQuery from "../../hooks/useIndicatorListQuery";
-import IndicatorDescription from "./IndicatorDescription";
-import { useAddIndicator } from "../../hooks/useAddIndicator";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-import strategyStore from "../../stores/strategyStore";
-import useStrategyIndicatorsQuery from "../../hooks/useStrategyIndicatorsQuery";
-import { useUpdateIndicator } from "../../hooks/useUpdateIndicator";
-//   import IndicatorForm from "./IndicatorForm";
+import CustomModal from "../common/layouts/CustomModal"
+import useIndicatorListQuery from "../../hooks/useIndicatorListQuery"
+import IndicatorDescription from "./IndicatorDescription"
+import { useAddIndicator } from "../../hooks/useAddIndicator"
+import { IoIosInformationCircleOutline } from "react-icons/io"
+import strategyStore from "../../stores/strategyStore"
+import useStrategyIndicatorsQuery from "../../hooks/useStrategyIndicatorsQuery"
+import { useUpdateIndicator } from "../../hooks/useUpdateIndicator"
+//   import IndicatorForm from "./IndicatorForm"
 
 export default function IndicatorSection() {
-  // const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
-  const { data, error, isLoading } = useStrategyIndicatorsQuery();
-  const mutateAsync = useUpdateIndicator();
-  const [isListVisible, setListVisible] = useState(true);
+  // const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
+  const { data, error, isLoading } = useStrategyIndicatorsQuery()
+  const mutateAsync = useUpdateIndicator()
+
+  const [isListVisible, setListVisible] = useState(true)
+
   // Component logic goes here
   return (
     <>
@@ -58,5 +60,5 @@ export default function IndicatorSection() {
         </div>
       )}
     </>
-  );
+  )
 }

@@ -5,32 +5,32 @@ import {
   Image,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import logo from "../../assets/react.svg";
-import ColorModeSwitch from "../ColorModeSwitch";
-import { Link } from "react-router-dom";
-import CustomModal from "../common/layouts/CustomModal";
-import LoginForm from "../auth/LoginForm";
-import SignUpForm from "../auth/SignUpForm";
-import useAuthStore from "../../stores/authStore";
-import { useColorMode } from "@chakra-ui/react";
+} from "@chakra-ui/react"
+import logo from "../../assets/react.svg"
+import ColorModeSwitch from "../ColorModeSwitch"
+import { Link } from "react-router-dom"
+import CustomModal from "../common/layouts/CustomModal"
+import LoginForm from "../auth/LoginForm"
+import SignUpForm from "../auth/SignUpForm"
+import useAuthStore from "../../stores/authStore"
+import { useColorMode } from "@chakra-ui/react"
 const NavBar = () => {
   const {
     isOpen: isLoginOpen,
     onOpen: onLoginOpen,
     onClose: onLoginClose,
-  } = useDisclosure();
+  } = useDisclosure()
   const {
     isOpen: isSignUpOpen,
     onOpen: onSignUpOpen,
     onClose: onSignUpClose,
-  } = useDisclosure();
+  } = useDisclosure()
 
 
   // Inside your component
-  const { colorMode } = useColorMode();
-  const { isAuthenticated, logout } = useAuthStore();
-  const bg = useColorModeValue("teal.500", "gray.800");
+  const { colorMode } = useColorMode()
+  const { isAuthenticated, logout } = useAuthStore()
+  const bg = useColorModeValue("teal.500", "gray.800")
   return (
     <>
       <Flex
@@ -107,7 +107,7 @@ const NavBar = () => {
         </Flex>
       </Flex>
     </>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
