@@ -1,4 +1,5 @@
 
+import Coin from "../models/Coin";
 import GridItem from "../models/GridItem";
 import Indicator from "../models/Indicator";
 import IndicatorList from "../models/IndicatorList";
@@ -11,3 +12,4 @@ export const CreateUserClient = new ApiClient<User>('users/create/');
 export const StrategiesClient = new ApiClient<Strategy>('strategy/strategies/');
 export const IndicatorTypesClient = new ApiClient<IndicatorList>('indicatortypes/');
 export const IndicatorClient = new ApiClient<Indicator>('strategy/indicators/');
+export const CoinClient = new ApiClient<Coin>('coins/');
