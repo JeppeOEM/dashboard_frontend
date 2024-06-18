@@ -11,20 +11,40 @@ import {
 import useCoinQuery from "../../hooks/useCoinQuery";
 import SearchCoin from "../coinList/SearchCoin";
 import SortCoinSelector from "../coinList/SortCoinSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import priceStore from "../../stores/priceStore";
+import usePriceQuery from "../../hooks/usePriceQuery";
 
 export default function CryptoCoinList() {
-  const { data, error, isLoading } = useCoinQuery();
-  const {prices, selectedCoinId, setPrices, setCoinId, getByCoinId} = priceStore();
-
+  const { data: dataCoins, error: errorCoins, isLoading:isLoadingCoins } = useCoinQuery();
+  const {prices, selectedCoinId, setPrices, setNext, setPrevious, setResults, setCoinId, getByCoinId} = priceStore();
+  
   const [isListVisible, setListVisible] = useState(true);
+
+
+  const {data: dataPrices, error: errorPrices, isLoading: isLoadingPrices} = usePriceQuery(selectedCoinId);
+ 
+  useEffect(() => {
+    if (selectedCoinId) {
+    //usePriceQuery have access to page number from the priceStore
+    console.log(dataPrices)
+    console.log(dataCoins);
+    // if (data) {
+    // setNext(data.next);
+    // setPrevious(data.previous);
+    // setResults(data.results);
+
+    // }
+    }
+}, [selectedCoinId]);
+
+
 
   return (
     <>
-      {isLoading && <Spinner />}
+      {isLoadingCoins && <Spinner />}
 
-      {error && <div>{error.message}</div>}
+      {errorCoins && <div>{errorCoins.message}</div>}
 
       <Button onClick={() => setListVisible(!isListVisible)}>
         {isListVisible ? "Close" : "Select Pair"}
@@ -37,11 +57,11 @@ export default function CryptoCoinList() {
 
           <div className="max-h-[300px] lg:h-screen overflow-auto ">
             <ul>
-              {data?.map((coin) => (
+              {dataCoins?.map((coin) => (
                 <li key={coin.id} className="p-4 hover:bg-gray-300">
-                  <Button onClick={() => setCoinId(coin.id)}>
+                <p onClick={() => setCoinId(coin.id)}>
                     {coin.name}
-                  </Button>
+                </p>
                 </li>
               ))}
             </ul>
