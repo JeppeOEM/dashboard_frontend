@@ -70,7 +70,9 @@ export default function SelectStrategyPanel() {
               textAlign="left"
               onClick={() => {
                 setOpenIndex(index === openIndex ? -1 : index);
+                console.log(strategy.id)
                 if (typeof strategy.id === 'number') {
+                  console.log(strategy.id)
                   setStrategyId(strategy.id);
                 }
               }}

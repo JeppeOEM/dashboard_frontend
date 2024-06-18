@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {IndicatorTypesClient} from "../services/ApiClientInstances"
 import IndicatorList from "../models/IndicatorList";
 
-const useIndicatorQuery = () => {
+const useIndicatorListQuery = () => {
   const fetchIndicators = async (): Promise<IndicatorList[]> => {
     try {
       const indicatorsData: IndicatorList[] = await IndicatorTypesClient.getAll();
@@ -14,11 +14,11 @@ const useIndicatorQuery = () => {
   };
 
   const { data, error, isError, isLoading } = useQuery<IndicatorList[], Error>({
-    queryKey: ["indicators"],
+    queryKey: ["indicatorList"],
     queryFn: fetchIndicators,
   });
 
   return { data, error, isError, isLoading };
 };
 
-export default useIndicatorQuery;
+export default useIndicatorListQuery;

@@ -16,10 +16,11 @@ import {
   import { useState } from "react";
 
   import CustomModal from "../common/layouts/CustomModal";
-  import useIndicatorQuery from "../../hooks/useIndicatorQuery";
+  import useIndicatorListQuery from "../../hooks/useIndicatorListQuery";
   import IndicatorDescription from "./IndicatorDescription";
 import { useAddIndicator } from "../../hooks/useAddIndicator";
 import { IoIosInformationCircleOutline } from 'react-icons/io';
+import strategyStore from "../../stores/strategyStore";
 //   import IndicatorForm from "./IndicatorForm";
 
   
@@ -32,10 +33,10 @@ export default function SelectIndicators() {
         onClose,
       } = useDisclosure();
     
-    const {data, error, isLoading} = useIndicatorQuery();
+    const {data, error, isLoading} = useIndicatorListQuery();
     const mutateAsync = useAddIndicator();
 
-    
+    const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
     // const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
 
     const [isListVisible, setListVisible] = useState(true);
@@ -63,8 +64,8 @@ export default function SelectIndicators() {
               whiteSpace="normal"
               textAlign="left"
               onClick={() => {
-                if (typeof indicator.id === 'number') {
-                  mutateAsync({kind: indicator.kind, settings: indicator.settings});
+                if (typeof indicator.id === 'number' && selectedId !== null) {
+                  mutateAsync({kind: indicator.kind, settings: indicator.settings, strategy_fk: selectedId});
                 }
               }}
               variant="link"

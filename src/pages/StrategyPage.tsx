@@ -1,6 +1,8 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import SideBar from "../components/strategy/SideBar";
 import useStrategyQuery from "../hooks/useStrategyQuery";
+import GridDashboard from "../components/GridDashboard/GridDashboard";
+import IndicatorSection from "../components/strategy/IndicatorSection";
 
 function StrategyPage() {
   return (
@@ -21,11 +23,13 @@ function StrategyPage() {
       {/* <Show above="lg"> */}
         <GridItem gridArea={"aside"} paddingX={1}>
         <SideBar></SideBar>
+        {/* <GridDashboard /> */}
         </GridItem>
       {/* </Show> */}
       <GridItem gridArea={"main"}>
+        <IndicatorSection></IndicatorSection>
       </GridItem>
-      {/* <GridDashboard /> */}
+
     </Grid>
     </div>
   );

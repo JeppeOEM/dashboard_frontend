@@ -53,6 +53,7 @@ const strategyStore = create<StrategyStore>((set) => ({
     },
     setStrategy: (strategyId) => {
         try {
+                console.log(strategyId)
                 set((state) => {
                     return {
                         selectedStrategy: state.strategies.find((strategy) => strategy.id === strategyId),
