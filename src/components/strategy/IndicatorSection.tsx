@@ -28,9 +28,7 @@ export default function IndicatorSection() {
   // const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
   const { data, error, isLoading } = useStrategyIndicatorsQuery();
   const mutateAsync = useUpdateIndicator();
-
   const [isListVisible, setListVisible] = useState(true);
-  console.log("fucking",data)
   // Component logic goes here
   return (
     <>
