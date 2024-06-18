@@ -15,11 +15,11 @@ interface CoinQueryStore {
 
 
 
-const CoinQueryStore = create<GameQueryStore>((set) => ({
+const coinQueryStore = create<CoinQueryStore>((set) => ({
   coinQuery: {},
-  setSearchText: (searchText) => set(() => ({ gameQuery: { searchText } })), //when searching, we clear the other filters
+  setSearchText: (searchText) => set(() => ({ coinQuery: { searchText } })), //when searching, we clear the other filters
   setSortOrder: (sortOrder) =>
-    set((store) => ({ gameQuery: { ...store.gameQuery, sortOrder } })),
+    set((store) => ({ coinQuery: { ...store.coinQuery, sortOrder } })),
 }));
 
-export default CoinGameQueryStore;
+export default coinQueryStore;

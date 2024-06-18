@@ -1,8 +1,12 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
-import SideBar from "../components/strategy/SideBar";
+import SideBar from "../components/navigationBars/SideBar";
 import useStrategyQuery from "../hooks/useStrategyQuery";
 import GridDashboard from "../components/GridDashboard/GridDashboard";
 import IndicatorSection from "../components/strategy/IndicatorSection";
+import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel";
+import SelectIndicators from "../components/strategy/SelectIndicators";
+import CryptoCoinList from "../components/strategy/CryptoCoinList";
+
 
 function StrategyPage() {
   return (
@@ -22,7 +26,11 @@ function StrategyPage() {
 
       {/* <Show above="lg"> */}
         <GridItem gridArea={"aside"} paddingX={1}>
-        <SideBar></SideBar>
+        <SideBar>
+          <SelectStratgyPanel />
+          <SelectIndicators />
+          <CryptoCoinList />
+        </SideBar>
         {/* <GridDashboard /> */}
         </GridItem>
       {/* </Show> */}

@@ -2,5 +2,5 @@ export default interface Indicator {
     id?: number;    
     kind: string;
     settings: string;
-    strategy_fk: number;
+    strategy_fk?: number;
 }

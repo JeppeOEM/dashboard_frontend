@@ -61,7 +61,7 @@ export default function SelectStrategyPanel() {
             <CreateStratForm onClose={onCreateStratClose} ></CreateStratForm>
           </CustomModal>
     
-              <List className="max-h-[200px] overflow-auto">
+              <List className="overflow-auto">
       {data?.map((strategy, index) => (
         <ListItem key={strategy.id} paddingY="5px">
           <HStack>

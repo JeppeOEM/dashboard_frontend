@@ -1,29 +1,36 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
+import { useRef } from "react";
+import { BsSearch } from "react-icons/bs";
 
-export default function SearchCoin({ coins }) {
-  const [search, setSearch] = useState('');
+import { useNavigate } from "react-router-dom";
+import coinQueryStore from "../../stores/coinQueryStore";
 
-  const filteredCoins = coins.filter(coin: => 
-    coin.name.toLowerCase().includes(search.toLowerCase())
-  );
+const SearchCoin = () => {
+  const ref = useRef<HTMLInputElement>(null);
+  const setSearchText = coinQueryStore((state) => state.setSearchText);
+  const navigate = useNavigate();
 
   return (
-    <div className="w-1/4 bg-gray-200 h-screen overflow-auto">
-      <input 
-        type="text" 
-        placeholder="Search..." 
-        value={search} 
-        onChange={e => setSearch(e.target.value)} 
-        className="w-full p-2 mb-4"
-      />
-      <ul>
-        {filteredCoins.map((coin) => (
-          <li key={coin.id} className="p-4 hover:bg-gray-300">
-            <NavLink className="block" to={`/coins/${coin.name}`}>{coin.name}</NavLink>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        setSearchText(ref.current?.value ?? "");
+        navigate("/");
+      }}
+    >
+      <InputGroup>
+        <InputLeftElement pointerEvents="none">
+          <BsSearch />
+        </InputLeftElement>
+        <Input
+          ref={ref}
+          borderRadius={20}
+          placeholder="Search coins"
+          variant="filled"
+        />
+      </InputGroup>
+    </form>
   );
-}
+};
+
+export default SearchCoin;

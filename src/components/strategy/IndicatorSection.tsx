@@ -30,7 +30,7 @@ export default function IndicatorSection() {
   const mutateAsync = useUpdateIndicator();
 
   const [isListVisible, setListVisible] = useState(true);
-
+  console.log("fucking",data)
   // Component logic goes here
   return (
     <>
@@ -40,12 +40,15 @@ export default function IndicatorSection() {
       <Button onClick={() => setListVisible(!isListVisible)}>
         {isListVisible ? "Close" : "Open Indicators"}
       </Button>
+      <h2>Test</h2>
+
       {isListVisible && (
         <div>
           <List>
+
             {data?.map((indicator, index) => (
               <div key={indicator.id}>
-                {indicator.settings.map((setting, settingIndex) => (
+                {indicator.settings.map((setting: any[], settingIndex: number) => (
                   <div key={settingIndex}>
                     <label>{setting[0]}</label>
                     <input type={typeof setting[2]} defaultValue={setting[2]} />
