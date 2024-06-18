@@ -34,12 +34,13 @@ export default function SelectStrategyPanel() {
     
     
     const { strategies, selectedId, setStrategies, setStrategyId, getById } = strategyStore();
-    const [openIndex, setOpenIndex] = useState(-1);
+
     const [isListVisible, setListVisible] = useState(true);
     function lol() {
      let test =  getById()
     console.log(test);
     }
+    // updates the client with new data everytime data changes
     useEffect(() => {
       if (data) {
           setStrategies(data);
@@ -81,7 +82,6 @@ export default function SelectStrategyPanel() {
               whiteSpace="normal"
               textAlign="left"
               onClick={() => {
-                setOpenIndex(index === openIndex ? -1 : index);
                 console.log(strategy.id);
                 if (typeof strategy.id === 'number') {
                   console.log(strategy.id);
@@ -94,9 +94,7 @@ export default function SelectStrategyPanel() {
             >
               {strategy.name}
             </Button>
-            <Collapse in={openIndex === index}>
-            <Box h="10px" w="10px" borderRadius="50%" bg="black" />
-            </Collapse>
+
           </HStack>
         </ListItem>
       ))}

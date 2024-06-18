@@ -12,9 +12,11 @@ import useCoinQuery from "../../hooks/useCoinQuery";
 import SearchCoin from "../coinList/SearchCoin";
 import SortCoinSelector from "../coinList/SortCoinSelector";
 import { useState } from "react";
+import priceStore from "../../stores/priceStore";
 
 export default function CryptoCoinList() {
   const { data, error, isLoading } = useCoinQuery();
+  const {prices, selectedCoinId, setPrices, setCoinId, getById} = priceStore();
 
   const [isListVisible, setListVisible] = useState(true);
 
@@ -37,9 +39,9 @@ export default function CryptoCoinList() {
             <ul>
               {data?.map((coin) => (
                 <li key={coin.id} className="p-4 hover:bg-gray-300">
-                  <NavLink className="block" to={`/coins/${coin.name}`}>
+                  <Button onClick={() => setCoinId(coin.id)}>
                     {coin.name}
-                  </NavLink>
+                  </Button>
                 </li>
               ))}
             </ul>

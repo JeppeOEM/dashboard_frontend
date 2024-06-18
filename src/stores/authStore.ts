@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-
+import { useQueryClient } from '@tanstack/react-query';
 
 async function _login(email:string, password:string) {
     console.log(import.meta.env.VITE_API_URL + "user/login/", "fucking token");
@@ -39,6 +39,8 @@ const useAuthStore = create<AuthStore>((set) => ({
     return success;
   },
   logout: () => {
+    const queryClient = useQueryClient();
+    queryClient.clear();
     console.log(localStorage.getItem('user'))
     localStorage.removeItem("user");
     set({ isAuthenticated: false });
