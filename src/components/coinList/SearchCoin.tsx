@@ -5,6 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import coinQueryStore from "../../stores/coinQueryStore";
 
+
 const SearchCoin = () => {
   const ref = useRef<HTMLInputElement>(null);
   const setSearchText = coinQueryStore((state) => state.setSearchText);

@@ -6,10 +6,13 @@ import IndicatorSection from "../components/strategy/IndicatorSection";
 import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel";
 import SelectIndicators from "../components/strategy/SelectIndicators";
 import CryptoCoinList from "../components/strategy/CryptoCoinList";
+import strategyStore from "../stores/strategyStore";
 
-
+// import strategyStore from "../stores/strategyStore";
 function StrategyPage() {
-  return (
+const { selectedStrategy, selectedId, setStrategyId } = strategyStore();
+console.log(selectedStrategy)
+return (
 <div>
 
 
@@ -35,6 +38,7 @@ function StrategyPage() {
         </GridItem>
       {/* </Show> */}
       <GridItem gridArea={"main"}>
+
         <IndicatorSection></IndicatorSection>
       </GridItem>
 

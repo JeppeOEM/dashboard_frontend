@@ -74,6 +74,7 @@ export default function SelectStrategyPanel() {
                 if (typeof strategy.id === 'number') {
                   console.log(strategy.id)
                   setStrategyId(strategy.id);
+                  setStrategy(strategy);
                 }
               }}
               variant="link"
