@@ -1,24 +1,23 @@
 import { create } from "zustand";
 
-import Strategy from "../models/Strategy"; 
-import { pricesClient } from "../services/ApiClientInstances";
+import { Price } from "../models/Price";
 
 
 interface priceStore {
 prices: Price[];
 selectedCoinId: number | null;
-setPrices: (prices: Strategy[]) => void;
+setPrices: (prices: Price[]) => void;
 setCoinId: (id: number) => void;
-getById: () => Strategy | undefined;
+getByCoinId: () => Price | undefined;
 }
 
 const priceStore = create<priceStore>((set, get) => ({
     prices: [],
     selectedCoinId: null,
-    setPrices: (prices: Strategy[]) => set(() => ({ prices })),
+    setPrices: (prices: Price[]) => set(() => ({ prices })),
     setCoinId: (id: number) => set(() => ({ selectedCoinId: id })),
   
-    getById: () => {
+    getByCoinId: () => {
         const { prices, selectedCoinId } = get();
         console.log(`Selected ID: ${selectedCoinId}`);
         console.log(`prices: ${JSON.stringify(prices)}`);

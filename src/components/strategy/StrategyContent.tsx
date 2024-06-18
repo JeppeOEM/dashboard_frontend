@@ -3,10 +3,12 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import strategyStore from "../../stores/strategyStore";
 import Strategy from "../../models/Strategy";
+import priceStore from "../../stores/priceStore";
 
 // import strategyStore from "../stores/strategyStore";
 function StrategyContent() {
 const { strategies, selectedId, setStrategies, setStrategyId, getById } = strategyStore();
+const {prices, selectedCoinId, setPrices, setCoinId, getByCoinId} = priceStore();
 const [strategy, setStrategy] = useState<Strategy>()
 
 useEffect(() => {
@@ -14,8 +16,9 @@ useEffect(() => {
         const strategy = getById();
         console.log(strategy);
         setStrategy(strategy); // If strategy is undefined, set it to null
+        setPrices(prices);
     }
-}, [selectedId]);
+}, [selectedId, selectedCoinId]);
 
 return (
 <div>

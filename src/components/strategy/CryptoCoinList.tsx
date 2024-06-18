@@ -16,7 +16,7 @@ import priceStore from "../../stores/priceStore";
 
 export default function CryptoCoinList() {
   const { data, error, isLoading } = useCoinQuery();
-  const {prices, selectedCoinId, setPrices, setCoinId, getById} = priceStore();
+  const {prices, selectedCoinId, setPrices, setCoinId, getByCoinId} = priceStore();
 
   const [isListVisible, setListVisible] = useState(true);
 
