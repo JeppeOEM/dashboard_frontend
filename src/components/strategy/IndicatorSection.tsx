@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import CustomModal from "../common/layouts/CustomModal"
 import useIndicatorListQuery from "../../hooks/useIndicatorListQuery"
@@ -22,15 +22,28 @@ import { IoIosInformationCircleOutline } from "react-icons/io"
 import strategyStore from "../../stores/strategyStore"
 import useStrategyIndicatorsQuery from "../../hooks/useStrategyIndicatorsQuery"
 import { useUpdateIndicator } from "../../hooks/useUpdateIndicator"
+import { useQueryClient } from "@tanstack/react-query"
+import indicatorStore from "../../stores/indicatorStore"
 //   import IndicatorForm from "./IndicatorForm"
 
 export default function IndicatorSection() {
   // const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
-  const { data, error, isLoading } = useStrategyIndicatorsQuery()
+  const {selectedId, setStrategyId} = strategyStore()
+  const {indicatorId} = indicatorStore()
+  const { data, error, isLoading } = useStrategyIndicatorsQuery(selectedId)
   const mutateAsync = useUpdateIndicator()
 
   const [isListVisible, setListVisible] = useState(true)
+  const queryClient = useQueryClient();
 
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['strategyIndicators'] })
+    console.log(indicatorId)
+    console.log(indicatorId)
+    console.log(indicatorId)
+
+  }, [selectedId, indicatorId])
+  
   // Component logic goes here
   return (
     <>

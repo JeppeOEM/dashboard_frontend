@@ -1,5 +1,5 @@
 export default interface Indicator {
-    id?: number    
+    id?: number | undefined   
     kind: string
     settings: string
     strategy_fk?: number

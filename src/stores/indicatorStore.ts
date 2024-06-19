@@ -1,86 +1,31 @@
 import { create } from "zustand"
 
-import Strategy from "../models/Strategy" 
-import { StrategiesClient } from "../services/ApiClientInstances"
+import Indicator from "../models/Indicator" 
+import { IndicatorsClient } from "../services/ApiClientInstances"
 
 
-interface StrategyStore {
-strategies: Strategy[]
-selectedStrategy: Strategy | null
-selectedId: number | null
-add: (name: string) => void
-remove: (strategyId: number) => void
-setStrategy: (strategyId: number) => void
-setStrategyId: (id: number) => void
+interface IndicatorStore {
+    indicators: Indicator[]
+    indicatorId: number | null
+    setIndicators: (indicators: Indicator[]) => void
+    setIndicatorId: (id: number | undefined) => void
+    getById: () => Indicator | undefined
 }
 
-
-const strategyStore = create<StrategyStore>((set) => ({
-    strategies: [],
-    selectedStrategy: null,
-    selectedId: null,
-
-    setStrategyId: (id: number) => set(() => ({ selectedId: id })),
-
-    add: async (name: string) => {
-        try {
-            const strategyName = { name }
-            // Update the database with the new strategy
-            StrategiesClient.post(strategyName).then(newStrategy => {
-                set((state) => {
-                    return {
-                        strategies: [...state.strategies, newStrategy],
-                    }
-                })
-            })
-        } catch (error) {
-            console.error('Error while adding item:', error)
-        }
+const indicatorStore = create<IndicatorStore>((set, get) => ({
+    indicators: [],
+    indicatorId: null,
+    setIndicators: (indicators: Indicator[]) => set(() => ({ indicators })),
+    setIndicatorId: (id: number) => set(() => ({ indicatorId: id })),
+  
+    getById: () => {
+        const { indicators, indicatorId } = get()
+        console.log(`Selected ID: ${indicatorId}`)
+        console.log(`Indicators: ${JSON.stringify(indicators)}`)
+        const foundIndicator = indicators.find((indicator) => indicator.id === indicatorId)
+        console.log(`Found indicator: ${JSON.stringify(foundIndicator)}`)
+        return foundIndicator
     },
-    remove: (strategyId) => {
-        try {
-            // Remove the strategy from the database
-            StrategiesClient.delete(strategyId).then(() => {
-                set((state) => {
-                    return {
-                        strategies: state.strategies.filter((strategy) => strategy.id !== strategyId),
-                    }
-                })
-            })
-        } catch (error) {
-            console.error('Error while removing item:', error)
-        }
-    },
-    setStrategy: (strategyId) => {
-        try {
-                set((state) => {
-                    return {
-                        selectedStrategy: state.strategies.find((strategy) => strategy.id === strategyId),
-                    }
-                })
-        } catch (error) {
-            console.error('Error while setting strategy:', error)
-        }
-    },
-    update: (strategyId: number, strategy: Strategy) => {
-        try {
-            StrategiesClient.update(strategyId, strategy).then(updatedStrategy => {
-                set((state) => {
-                    return {
-                        strategies: state.strategies.map((strategy) => {
-                            // checks if id is the same as the updated strategy
-                            // and replaces the strategy if it is
-                            return strategy.id === strategyId ? updatedStrategy : strategy
-                        }),
-                    }
-                })
-            })
-        } catch (error) {
-            console.error('Error while updating strategy:', error)
-        }
-    }
 }))
 
-export default strategyStore
-
-
+export default indicatorStore

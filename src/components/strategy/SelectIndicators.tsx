@@ -24,6 +24,7 @@ import { useAddIndicator } from "../../hooks/useAddIndicator"
 import { IoIosInformationCircleOutline } from "react-icons/io"
 import strategyStore from "../../stores/strategyStore"
 import Indicator from "../../models/Indicator"
+import indicatorStore from "../../stores/indicatorStore"
 //   import IndicatorForm from "./IndicatorForm"
 
 export default function SelectIndicators() {
@@ -38,7 +39,7 @@ export default function SelectIndicators() {
   const { data, error, isLoading } = useIndicatorListQuery()
   const mutateAsync = useAddIndicator()
   const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
-  // const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
+  const { indicatorId, setIndicatorId } = indicatorStore()
   const [isListVisible, setListVisible] = useState(true)
 
   const borderColor = useColorModeValue('gray.500', 'white');
@@ -67,6 +68,16 @@ export default function SelectIndicators() {
       onOpenError()
     }
   }
+
+  function addSelectIndicator(indicator: Indicator, selectedId: number | null){
+    if (indicator.id !== null){
+
+      setIndicatorId(indicator.id)
+      console.log(indicatorId,"indicator id")
+    }
+    addIndicator(indicator, selectedId)
+  }
+
 
   // Component logic goes here
   return (
@@ -122,7 +133,7 @@ export default function SelectIndicators() {
                       <Button
                         whiteSpace="normal"
                         textAlign="left"
-                        onClick={() => addIndicator(indicator, selectedId)}
+                        onClick={() => addSelectIndicator(indicator, selectedId)}
                         variant="link"
                         fontSize="md"
                         color={listTextColor}

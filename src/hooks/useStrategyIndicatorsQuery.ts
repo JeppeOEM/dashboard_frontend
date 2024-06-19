@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query"
-import {IndicatorClient} from "../services/ApiClientInstances"
+import {IndicatorStrategyClient} from "../services/ApiClientInstances"
 import Indicator from "../models/Indicator"
 
-const useStrategyIndicatorQuery = () => {
-  const fetchIndicators = async (): Promise<Indicator[]> => {
+const useStrategyIndicatorQuery = (strategy_fk:number | null) => {
+  console.log("FUUUUUUUUUUUUUUUUUUUCK,",strategy_fk)
+  const fetchStrategyIndicators = async (): Promise<Indicator[]> => {
 
-    const coinData: Indicator[] = await IndicatorClient.getAll()
-    console.log(coinData)
-    return coinData
+      const indicatorData: Indicator[] = await IndicatorStrategyClient.getSingleParam(strategy_fk, "strategy_fk" )
+      console.log(`Indicator Data!: ${indicatorData}`)
+      
+      return indicatorData
+    }
+  
+    return useQuery<Indicator[], Error>({
+      queryKey: ["strategyIndicators"],
+      queryFn: fetchStrategyIndicators,
+    })
   }
 
-  return useQuery<Indicator[], Error>({
-    queryKey: ["indicators"],
-    queryFn: fetchIndicators,
-  })
-}
 
 export default useStrategyIndicatorQuery
+

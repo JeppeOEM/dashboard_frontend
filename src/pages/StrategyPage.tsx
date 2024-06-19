@@ -87,7 +87,7 @@ const queryClient = useQueryClient();
 useEffect(() => {
   let l = getById(selectedId)
   console.log("L",l)
-  queryClient.invalidateQueries(['prices']);
+  queryClient.invalidateQueries({queryKey: ['prices']});
   console.log(selectedCoinId)
   console.log("DATAPRICES",dataPrices)
   if (dataPrices) {
