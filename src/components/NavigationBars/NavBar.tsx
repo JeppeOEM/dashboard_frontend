@@ -2,10 +2,15 @@ import {
   Button,
   Flex,
   HStack,
+  IconButton,
   Image,
   useColorModeValue,
   useDisclosure,
+  VStack,
+  Box,
+  useBreakpointValue,
 } from "@chakra-ui/react"
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons"
 import logo from "../../assets/react.svg"
 import ColorModeSwitch from "../ColorModeSwitch"
 import { Link } from "react-router-dom"
@@ -14,6 +19,7 @@ import LoginForm from "../auth/LoginForm"
 import SignUpForm from "../auth/SignUpForm"
 import useAuthStore from "../../stores/authStore"
 import { useColorMode } from "@chakra-ui/react"
+
 const NavBar = () => {
   const {
     isOpen: isLoginOpen,
@@ -25,12 +31,21 @@ const NavBar = () => {
     onOpen: onSignUpOpen,
     onClose: onSignUpClose,
   } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-
-  // Inside your component
   const { colorMode } = useColorMode()
   const { isAuthenticated, logout } = useAuthStore()
   const bg = useColorModeValue("teal.500", "gray.800")
+
+  const showLogo = useBreakpointValue({ base: false, md: true })
+
+  // Function to close the menu when a link is clicked
+  const handleLinkClick = () => {
+    if (isOpen) {
+      onClose()
+    }
+  }
+
   return (
     <>
       <Flex
@@ -41,11 +56,34 @@ const NavBar = () => {
         padding="0.8rem"
         bg={bg}
         color="white"
+        position="fixed"
+        top="0"
+        left="0"
+        right="0"
+        zIndex="1000"
       >
         <Flex align="center" mr={5} className="space-x-4">
-          <Link to="/" className="text-lg">
-            <Image src={logo} alt="React Logo" boxSize="30px" />
-          </Link>
+          {showLogo ? (
+            <Link to="/" className="text-lg">
+              <Image src={logo} alt="React Logo" boxSize="30px" />
+            </Link>
+          ) : (
+            <IconButton
+              display={{ base: "block", md: "none" }}
+              onClick={isOpen ? onClose : onOpen}
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              variant="outline"
+              aria-label="Open Menu"
+            />
+          )}
+        </Flex>
+
+        <HStack
+          display={{ base: "none", md: "flex" }}
+          align="center"
+          spacing={4}
+          className="space-x-4"
+        >
           {isAuthenticated && (
             <Link to="/backtest" className="text-lg">
               Backtest Strategies
@@ -60,11 +98,12 @@ const NavBar = () => {
           <Link to="/home" className="text-lg">
             Home
           </Link>
-        </Flex>
+        </HStack>
+
         <Flex align="center">
           <ColorModeSwitch />
           {!isAuthenticated && (
-            <div>
+            <>
               <Button onClick={onLoginOpen} colorScheme="teal" ml={5}>
                 Login
               </Button>
@@ -73,12 +112,8 @@ const NavBar = () => {
                 title="Login"
                 onClose={onLoginClose}
               >
-                <LoginForm onClose={onLoginClose}></LoginForm>
+                <LoginForm onClose={onLoginClose} />
               </CustomModal>
-            </div>
-          )}
-          {!isAuthenticated && (
-            <div>
               <Button onClick={onSignUpOpen} colorScheme="teal">
                 Sign up
               </Button>
@@ -87,25 +122,51 @@ const NavBar = () => {
                 onClose={onSignUpClose}
                 title="Create Account"
               >
-                <SignUpForm onClose={onSignUpClose}></SignUpForm>
+                <SignUpForm onClose={onSignUpClose} />
               </CustomModal>
-            </div>
+            </>
           )}
-
           {isAuthenticated && (
-            <div>
-<Button
-  colorScheme={colorMode === "dark" ? "black" : "white"}
-  color={colorMode === "dark" ? "white" : "black"}
-  ml={4}
-  onClick={() => logout()}
->
-  Log out
-</Button>
-            </div>
+            <Button
+              colorScheme={colorMode === "dark" ? "black" : "white"}
+              color={colorMode === "dark" ? "white" : "black"}
+              ml={4}
+              onClick={() => logout()}
+            >
+              Log out
+            </Button>
           )}
         </Flex>
       </Flex>
+
+      <VStack
+        display={{ base: isOpen ? "flex" : "none", md: "none" }}
+        align="start"
+        spacing={4}
+        p={4}
+        bg={bg}
+        color="white"
+        position="fixed"
+        top="3.5rem"  // Adjust as necessary to match the height of the navbar
+        left="0"
+        right="0"
+        zIndex="999"
+      >
+        {isAuthenticated && (
+          <Link to="/backtest" className="text-lg" onClick={handleLinkClick}>
+            Backtest Strategies
+          </Link>
+        )}
+        <Link to="/coins" className="text-lg" onClick={handleLinkClick}>
+          Coin list
+        </Link>
+        <Link to="/dashboard" className="text-lg" onClick={handleLinkClick}>
+          Dashboard
+        </Link>
+        <Link to="/home" className="text-lg" onClick={handleLinkClick}>
+          Home
+        </Link>
+      </VStack>
     </>
   )
 }

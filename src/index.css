@@ -3,3 +3,6 @@
 @tailwind utilities;
 
 
+body {
+    padding-top: 5rem; /* Adjust this value to match the height of your navbar */
+  }
