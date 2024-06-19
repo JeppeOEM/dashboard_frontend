@@ -12,6 +12,7 @@ import {
   useDisclosure,
   Flex,
   Box,
+  useColorModeValue,
 } from "@chakra-ui/react"
 
 import { useState } from "react"
@@ -39,8 +40,14 @@ export default function SelectIndicators() {
   const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
   // const { selectedStrategy, selectedId, setStrategyId } = strategyStore()
   const [isListVisible, setListVisible] = useState(true)
-  
-  
+
+  const borderColor = useColorModeValue('gray.500', 'white');
+  const buttonBackgroundColor = useColorModeValue('black', 'white');
+  const buttonTextColor = useColorModeValue('white', 'black');
+  const listBgColor = useColorModeValue('gray.100', 'gray.700');
+  const listTextColor = useColorModeValue('black', 'white');
+  const listBorderColor = useColorModeValue('gray.300', 'gray.500');
+
   const addIndicator = async (indicator: Indicator, selectedId: number | null) => {
     console.log(indicator.id, selectedId)
     if (typeof indicator.id === "number" && selectedId !== null) {
@@ -60,9 +67,6 @@ export default function SelectIndicators() {
       onOpenError()
     }
   }
-  
-
-
 
   // Component logic goes here
   return (
@@ -80,6 +84,12 @@ export default function SelectIndicators() {
         onClick={() => setListVisible(!isListVisible)}
         width="100%"
         border="none"
+        backgroundColor={buttonBackgroundColor}
+        color={buttonTextColor}
+        _hover={{
+          backgroundColor: useColorModeValue('white', 'black'),
+          color: useColorModeValue('black', 'white')
+        }}
       >
         {isListVisible ? "Indicator List" : "Indicator List"}
         <Box
@@ -89,7 +99,7 @@ export default function SelectIndicators() {
           borderWidth="0 2px 2px 0"
           display="inline-block"
           padding="3px"
-          transform={isListVisible ? "rotate(45deg)": "rotate(-135deg)"}
+          transform={isListVisible ? "rotate(45deg)" : "rotate(-135deg)"}
           marginLeft="5px"
         />
       </Button>
@@ -97,37 +107,32 @@ export default function SelectIndicators() {
         <div>
           <List
             maxHeight="200px"
-            bg="gray.300"
+            bg={listBgColor}
             className="overflow-auto"
-            color="black"
+            color={listTextColor}
             borderRadius="md"
-            border="1px solid gray.300"
+            border={`1px solid ${listBorderColor}`}
             fontSize="lg"
           >
             {data?.map((indicator, index) => (
               <ListItem key={indicator.id} paddingY="5px">
-                {/* <HStack> */}
                 <HStack>
                   <div>
-                  <Flex justifyContent="space-between" width="full">
- 
-
-                  <Button
-                    whiteSpace="normal"
-                    textAlign="left"
-                    onClick={() => addIndicator(indicator, selectedId)}
-                    variant="link"
-                    fontSize="md"
-                    color="black"
-                    >
-                    {indicator.kind}
-                  </Button>
-                  
-                  <Button onClick={onOpen}>
-                    <IoIosInformationCircleOutline size={24} />
-                  </Button>
-  
-                </Flex>
+                    <Flex justifyContent="space-between" width="full">
+                      <Button
+                        whiteSpace="normal"
+                        textAlign="left"
+                        onClick={() => addIndicator(indicator, selectedId)}
+                        variant="link"
+                        fontSize="md"
+                        color={listTextColor}
+                      >
+                        {indicator.kind}
+                      </Button>
+                      <Button onClick={onOpen}>
+                        <IoIosInformationCircleOutline size={24} />
+                      </Button>
+                    </Flex>
                     <CustomModal
                       isOpen={isOpen}
                       title="Indicator Description"
@@ -140,7 +145,6 @@ export default function SelectIndicators() {
                     </CustomModal>
                   </div>
                 </HStack>
-                {/* </HStack> */}
               </ListItem>
             ))}
           </List>

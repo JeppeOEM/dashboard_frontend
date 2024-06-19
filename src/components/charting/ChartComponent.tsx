@@ -1,8 +1,12 @@
 import { createChart, ColorType, IChartApi } from 'lightweight-charts'
 import React, { useEffect, useRef, useState } from 'react'
 import Timeseries from '../../models/Timeseries'
+import { lightModeColor } from './lightModeColor'
+import { darkModeColor } from './darkModeColor'
+import { useColorMode } from '@chakra-ui/react'
 
 interface ChartComponentProps {
+    windowSize: number
     data: Timeseries[]
     colors?: {
         backgroundColor?: string
@@ -14,7 +18,9 @@ interface ChartComponentProps {
 }
 
 export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
+
     const {
+        windowSize,
         data,
         colors: {
             backgroundColor = 'white',
@@ -31,7 +37,7 @@ export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
     useEffect(() => {
         const handleResize = () => {
             if (chartRef.current) {
-                console.log("dddddd")
+                
                 chartRef.current.applyOptions({ width: chartContainerRef.current?.clientWidth })
             }
         }
@@ -58,7 +64,7 @@ export const ChartComponent: React.FC<ChartComponentProps> = (props) => {
                 chartRef.current.remove()
             }
         }
-    }, [chartContainerRef, data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor])
+    }, [windowSize, chartContainerRef, data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor])
 
     return <div ref={chartContainerRef} />
 }

@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Show, Text } from "@chakra-ui/react"
+import { Box, Grid, GridItem, Show, Text, useColorMode } from "@chakra-ui/react"
 import SideBar from "../components/navigationBars/SideBar"
 import useStrategyQuery from "../hooks/useStrategyQuery"
 import GridDashboard from "../components/GridDashboard/GridDashboard"
@@ -16,12 +16,34 @@ import usePriceQuery from "../hooks/usePriceQuery"
 import { Price } from "../models/Price"
 import Timeseries from "../models/Timeseries"
 import { useQueryClient } from "@tanstack/react-query"
+import { darkModeColor } from "../components/charting/darkModeColor"
+import { lightModeColor } from "../components/charting/lightModeColor"
 // import strategyStore from "../stores/strategyStore"
 function StrategyPage() {
   const {prices, selectedCoinId, results, setPrices, setNext, setPrevious, setResults, setPage, setCoinId, getByCoinId} = priceStore()
   const {getById, selectedId} = strategyStore()
   const {data: dataPrices, error: errorPrices, isLoading: isLoadingPrices} = usePriceQuery(selectedCoinId)
+  const { colorMode } = useColorMode();
+  const colors = colorMode === 'dark' ? darkModeColor : lightModeColor;
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
   
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const initialData = [
     { time: '2018-12-22', value: 32.51 },
@@ -90,36 +112,42 @@ return (
 
 
 <Grid
-      templateAreas={{
-        base: "main",
-        lg: `"aside main"`,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr",
-      }}
-    >
+  templateAreas={{
+    base: `
+      "chart"
+      "aside"
+    `,
+    lg: `
+      "aside chart"
 
-      {/* <Show above="lg"> */}
-        <GridItem gridArea={"aside"} paddingX={1}>
-        <SideBar>
-          <SelectStratgyPanel />
-          <SelectIndicators />
-          <CryptoCoinList />
-        </SideBar>
-        {/* <GridDashboard /> */}
-        </GridItem>
-      {/* </Show> */}
-      <GridItem gridArea={"main"}>
-        <StrategyName></StrategyName>
-        <Box className="m-2.5">
-        <Text>{}</Text>
-        <ChartComponent data={chartData} ></ChartComponent>
-        </Box>
-        <IndicatorSection></IndicatorSection>
-      </GridItem>
+    `,
+  }}
+  templateColumns={{
+    base: "1fr",
+    lg: "200px 1fr",
+  }}
+>
+  <GridItem gridArea={"aside"} paddingX={1}>
+    <SideBar>
+      <SelectStratgyPanel />
+      <SelectIndicators />
+      <CryptoCoinList />
+    </SideBar>
+  </GridItem>
 
-    </Grid>
+  {/* <GridItem gridArea={"main"}>
+
+
+  </GridItem> */}
+
+  <GridItem gridArea={"chart"}>
+  <StrategyName></StrategyName>
+    <Box className="m-2.5">
+      <ChartComponent windowSize={windowSize.width} data={chartData} colors={colors} />
+    </Box>
+    <IndicatorSection></IndicatorSection>
+  </GridItem>
+</Grid>
     </div>
   )
 }

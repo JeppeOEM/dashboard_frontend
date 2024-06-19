@@ -8,6 +8,8 @@ import {
   List,
   ListItem,
   Spinner,
+  useColorMode,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react"
 import strategyStore from "../../stores/strategyStore"
@@ -26,9 +28,14 @@ export default function SelectStrategyPanel() {
     onOpen: onCreateStratOpen,
     onClose: onCreateStratClose,
   } = useDisclosure()
-
+  const {colorMode} = useColorMode
   const { data, error, isLoading } = useStrategyQuery()
-
+  const borderColor = useColorModeValue('gray.500', 'white');
+  const buttonBackgroundColor = useColorModeValue('black', 'white');
+  const buttonTextColor = useColorModeValue('white', 'black');
+  const listColor = useColorModeValue('teal', 'grey');
+  const listBgColor = useColorModeValue('gray.100', 'gray.700');
+  const listTextColor = useColorModeValue('black', 'white');
   const { strategies, selectedId, setStrategies, setStrategyId, getById } =
     strategyStore()
 
@@ -41,29 +48,45 @@ export default function SelectStrategyPanel() {
     }
   }, [data])
 
-  // Component logic goes here
   return (
     <>
       {/* {error && <div>{error.message}</div>} */}
 
-      <Button onClick={onCreateStratOpen} colorScheme="teal" mb={3} mt={3}>
-        Create new strategy
+      <Button
+        onClick={onCreateStratOpen}
+                width="100%"
+        backgroundColor={buttonBackgroundColor}
+        color={buttonTextColor}
+        mb={3}
+        mt={3}
+        _hover={{
+          backgroundColor: useColorModeValue('white', 'black'),
+          color: useColorModeValue('black', 'white')
+        }}
+      >
+        Create strategy
       </Button>
       {isLoading && <Spinner />}
       <Button
         onClick={() => setListVisible(!isListVisible)}
         width="100%"
         border="none"
+        backgroundColor={buttonBackgroundColor}
+        color={buttonTextColor}
+        _hover={{
+          backgroundColor: useColorModeValue('white', 'black'),
+          color: useColorModeValue('black', 'white')
+        }}
       >
         {isListVisible ? "Strategy List" : "Strategy List"}
         <Box
           as="span"
           border="solid 1px"
-          borderColor="currentColor"
+          borderColor={borderColor}
           borderWidth="0 2px 2px 0"
           display="inline-block"
           padding="3px"
-          transform={isListVisible ? "rotate(45deg)": "rotate(-135deg)"}
+          transform={isListVisible ? "rotate(45deg)" : "rotate(-135deg)"}
           marginLeft="5px"
           fontSize="lg"
         />
@@ -80,9 +103,9 @@ export default function SelectStrategyPanel() {
 
           <List
             maxHeight="200px"
-            bg="gray.300"
+            bg={listBgColor}
             className="overflow-auto"
-            color="black"
+            color={listTextColor}
             borderRadius="md"
             border="1px solid gray.300"
           >
@@ -106,7 +129,7 @@ export default function SelectStrategyPanel() {
                     }}
                     variant="link"
                     fontSize="md"
-                    color="black"
+                    color={listTextColor}
                   >
                     {strategy.name}
                   </Button>
