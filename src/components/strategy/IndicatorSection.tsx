@@ -38,24 +38,32 @@ export default function IndicatorSection() {
     console.log(indicatorId);
   }, [selectedId, indicatorId, queryClient]);
 
-  const handleSave = (indicatorId) => {
+
+  function updatedIndicator(indicatorObject, indicatorSettings)
+  {
+    const updated = indicatorObject.settings[0].map((setting, index) => {
+      return [setting[0], setting[1], indicatorSettings[index]]; // Update the third element [2] with indicatorSettings[index]
+    });
+    console.log(updated)
+    return updated;
+  }
+
+  function handleSave(indicatorId: number){
     const indicatorSettings = Object.keys(inputRefs.current[indicatorId]).map(
       (key) => inputRefs.current[indicatorId][key].value
     );
 
     const indicatorObject = data.find((indicator) => indicator.id === indicatorId);
 
-    console.log(indicatorSettings);
+    console.log("indi",indicatorSettings);
     console.log(indicatorObject);
-    const objSettings = indicatorObject.settings.slice(1);
 
-    const settingsToUpdate = indicatorObject.settings[0].slice(1).map((setting, index) => {
-      return [setting[0], setting[1], indicatorSettings[index]]; // Update the third element [2] with indicatorSettings[index]
-    });
-    console.log("Updated Settings:", settingsToUpdate);
 
+    let updatedSettings = updatedIndicator(indicatorObject, indicatorSettings);
+    indicatorObject.settings = updatedSettings
+    console.log("ddddd",indicatorObject)
     // Now you have both indicatorSettings and indicatorObject, handle them as needed
-    // Example: mutateAsync({ indicatorId, settings: indicatorSettings });
+    // mutateAsync({ id: indicatorId, newIndicator: indicatorObject });
 
     return indicatorObject; // Return the indicator object for further handling
   };
@@ -100,7 +108,7 @@ export default function IndicatorSection() {
               <span className="text-lg">{indicator.kind}</span>
               <div className="flex flex-row items-center">
                 {/* <div className="flex flex-col space-y-2"> */}
-                {indicator.settings[0].slice(1)
+                {indicator.settings[0]
                   .map((setting, settingIndex) => (
                     <div key={settingIndex}>
                       <label className="text-sm font-medium">

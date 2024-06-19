@@ -61,7 +61,7 @@ class ApiClient<T> {
 
   update = (id: number, data: T) => {
     return axiosInstance
-      .put(`${this.endpoint}/${id}`, data,{headers})
+      .put(`${this.endpoint}${id}/`, data,{headers})
       .then((res) => res.data)
   }
 }
