@@ -3,14 +3,10 @@ import {
   Button,
   Spinner,
   List,
-  VStack,
   Input,
-  FormControl,
-  FormLabel,
-  Flex,
 } from "@chakra-ui/react";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import strategyStore from "../../stores/strategyStore";
@@ -27,57 +23,69 @@ export default function IndicatorSection() {
   const [isListVisible, setListVisible] = useState(true);
   const queryClient = useQueryClient();
   const inputRefs = useRef({});
-  const indicatorObjectRefs = useRef({});
-  
 
-
-
-
+  // Invalidate queries when selectedId or indicatorId changes
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["strategyIndicators"] });
-    console.log(indicatorId);
-  }, [selectedId, indicatorId, queryClient]);
+  }, [selectedId, indicatorId]);
 
+  // Initialize form values when data is loaded
+  useEffect(() => {
+    if (data) {
+      const initialValues = {};
+      data.forEach((indicator) => {
+        initialValues[indicator.id] = indicator.settings[0].reduce((acc, setting, index) => {
+          acc[index] = setting[2];
+          return acc;
+        }, {});
+      });
+      setFormValues(initialValues);
+    }
+  }, [data]);
 
-  function updatedIndicator(indicatorObject, indicatorSettings)
-  {
+  // Update indicator settings
+  function updatedIndicator(indicatorObject, indicatorSettings) {
     const updated = indicatorObject.settings[0].map((setting, index) => {
       return [setting[0], setting[1], indicatorSettings[index]]; // Update the third element [2] with indicatorSettings[index]
     });
-    console.log(updated)
     return updated;
   }
 
-  function handleSave(indicatorId: number){
-    const indicatorSettings = Object.keys(inputRefs.current[indicatorId]).map(
-      (key) => inputRefs.current[indicatorId][key].value
+  // Handle saving indicator settings
+  function handleSave(indicatorId) {
+    const indicatorSettings = Object.keys(formValues[indicatorId]).map(
+      (key) => formValues[indicatorId][key]
     );
 
     const indicatorObject = data.find((indicator) => indicator.id === indicatorId);
 
-    console.log("indi",indicatorSettings);
-    console.log(indicatorObject);
-
-
     let updatedSettings = updatedIndicator(indicatorObject, indicatorSettings);
-    indicatorObject.settings = updatedSettings
-    console.log("ddddd",indicatorObject)
-    // Now you have both indicatorSettings and indicatorObject, handle them as needed
-    // mutateAsync({ id: indicatorId, newIndicator: indicatorObject });
+    indicatorObject.settings[0] = updatedSettings;
 
-    return indicatorObject; // Return the indicator object for further handling
-  };
+    // Mutate and update the cache
+    mutateAsync({ id: indicatorId, newIndicator: indicatorObject }).then(() => {
+      queryClient.invalidateQueries({ queryKey: ["strategyIndicators"] });
+    });
+  }
+
+  // Handle input change
+  function handleInputChange(indicatorId, settingIndex, value) {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [indicatorId]: {
+        ...prevValues[indicatorId],
+        [settingIndex]: value,
+      },
+    }));
+  }
 
   return (
     <>
-
-    
       <Button
         onClick={() => setListVisible(!isListVisible)}
         width="100%"
         border="none"
         mb={3}
-
       >
         {isListVisible ? "Indicators" : "Indicator"}
         <Box
@@ -94,52 +102,47 @@ export default function IndicatorSection() {
       {isLoading && <Spinner />}
       {error && <div>{error.message}</div>}
       {isListVisible && (
-      <Box>
-        <List className="flex flex-row flex-wrap">
-          {data?.map((indicator) => (
-            <Box
-              key={indicator.id}
-              p={2}
-              borderWidth="1px"
-              borderRadius="lg"
-              mb={2}
-              className="mr-4"
-            >
-              <span className="text-lg">{indicator.kind}</span>
-              <div className="flex flex-row items-center">
-                {/* <div className="flex flex-col space-y-2"> */}
-                {indicator.settings[0]
-                  .map((setting, settingIndex) => (
+        <Box>
+          <List className="flex flex-row flex-wrap">
+            {data?.map((indicator) => (
+              <Box
+                key={indicator.id}
+                p={2}
+                borderWidth="1px"
+                borderRadius="lg"
+                mb={2}
+                className="mr-4"
+              >
+                <span className="text-lg">{indicator.kind}</span>
+                <div className="flex flex-row items-center">
+                  {indicator.settings[0].map((setting, settingIndex) => (
                     <div key={settingIndex}>
                       <label className="text-sm font-medium">
                         {setting[0]}{" "}
                       </label>
-                      <input
+                      <Input
                         type={typeof setting[2]}
-                        defaultValue={setting[2]}
-                        ref={(el) => {
-                          if (!inputRefs.current[indicator.id]) {
-                            inputRefs.current[indicator.id] = {};
-                          }
-                          inputRefs.current[indicator.id][settingIndex] = el;
-                        }}
+                        value={formValues[indicator.id]?.[settingIndex] || ""}
+                        onChange={(e) =>
+                          handleInputChange(indicator.id, settingIndex, e.target.value)
+                        }
                         className="border-2 border-gray-300 rounded-md p-1 m-1 w-10"
                       />
                     </div>
                   ))}
-              </div>
-              <Button
+                </div>
+                <Button
                   mt={2}
                   colorScheme="teal"
                   onClick={() => handleSave(indicator.id)}
                 >
                   Save Settings
                 </Button>
-            </Box>
-          ))}
-        </List>
-      </Box>
-    )}
-  </>
-)
-  }
+              </Box>
+            ))}
+          </List>
+        </Box>
+      )}
+    </>
+  );
+}
