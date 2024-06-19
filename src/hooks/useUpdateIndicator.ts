@@ -1,14 +1,21 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import {IndicatorClient} from "../services/ApiClientInstances"
 import Indicator from "../models/Indicator"
-// import {GridItemClass} from "../models/GridItem"
 
 export const useUpdateIndicator = () => {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: ({ id, newIndicator }: { id: number, newIndicator: Indicator }) => 
-        IndicatorClient.update(id, newIndicator)
+        IndicatorClient.update(id, newIndicator),
+    onSuccess: (updatedIndicator) => {
+      queryClient.setQueryData<Indicator[]>(["strategyIndicators"], (oldIndicators) => 
+        oldIndicators?.map(indicator => 
+          indicator.id === updatedIndicator.id ? updatedIndicator : indicator
+        )
+      );
+    }
   })
 
   return mutation.mutateAsync
 }
-

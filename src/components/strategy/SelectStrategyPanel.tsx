@@ -82,13 +82,12 @@ export default function SelectStrategyPanel() {
         <Box
           as="span"
           border="solid 1px"
-          borderColor={borderColor}
+          borderColor="currentColor"
           borderWidth="0 2px 2px 0"
           display="inline-block"
           padding="3px"
           transform={isListVisible ? "rotate(45deg)" : "rotate(-135deg)"}
           marginLeft="5px"
-          fontSize="lg"
         />
       </Button>
       {isListVisible && (

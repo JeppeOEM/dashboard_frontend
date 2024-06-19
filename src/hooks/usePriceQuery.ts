@@ -18,7 +18,7 @@ const usePriceQuery = (coinId:number) => {
   }
 
   return useQuery<PriceResponse, Error>({
-    queryKey: ["prices"],
+    queryKey: coinId ? ["coin",coinId,"prices"] : ["prices"],
     queryFn: fetchPrices,
   })
 }
