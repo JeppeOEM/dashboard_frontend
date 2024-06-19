@@ -9,12 +9,15 @@ export const useUpdateIndicator = () => {
     mutationFn: ({ id, newIndicator }: { id: number, newIndicator: Indicator }) => 
         IndicatorClient.update(id, newIndicator),
     onSuccess: (updatedIndicator) => {
-      console.log("MUTATE", updatedIndicator);
+      console.log("update indicator", updatedIndicator);
       queryClient.setQueryData<Indicator[]>(["strategyIndicators"], (oldIndicators) => 
         oldIndicators?.map(indicator => 
           indicator.id === updatedIndicator.id ? updatedIndicator : indicator
         )
       );
+    },
+    onError: (error) => {
+      console.error("Failed to update indicator", error);
     }
   })
 

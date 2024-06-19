@@ -7,7 +7,7 @@ export const useDeleteIndicator = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ id}: { id: number }) => {
-        // return id so we can use it in onSuccess
+
       await IndicatorClient.delete(id);
           return id;
     },
@@ -16,7 +16,10 @@ export const useDeleteIndicator = () => {
       queryClient.setQueryData<Indicator[]>(["strategyIndicators"], (oldIndicators = []) => 
         oldIndicators.filter(indicator => indicator.id !== deletedIndicatorId)
       );
-    }
+    },
+    onError: (error) => {
+        console.error("Failed to delete indicator", error);
+      }
   })
 
   return mutation.mutateAsync

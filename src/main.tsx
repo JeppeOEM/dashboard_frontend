@@ -22,18 +22,15 @@ const router = createBrowserRouter([
       {
         path: "/coins",
         element: <CoinListPage />,
-        children: [
-          {
-            path: "/coins/:id",
-            element: <CoinPage />
-          }
-        ]
+      },
+      {
+        path: "/coins/:id",
+        element: <CoinPage />,
       },
       {
         path: "/backtest",
         element: <StrategyPage />,
       },
-
     ],
   },
 

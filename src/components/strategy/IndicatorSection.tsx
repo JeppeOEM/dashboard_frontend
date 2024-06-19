@@ -13,12 +13,15 @@ import strategyStore from "../../stores/strategyStore";
 import indicatorStore from "../../stores/indicatorStore";
 import useStrategyIndicatorsQuery from "../../hooks/useStrategyIndicatorsQuery";
 import { useUpdateIndicator } from "../../hooks/useUpdateIndicator";
+import DeleteIndicatorButton from "./DeleteIndicatorButton";
+import Indicator from "../../models/Indicator";
 
 export default function IndicatorSection() {
   const { selectedId } = strategyStore();
   const { indicatorId } = indicatorStore();
   const { data, error, isLoading } = useStrategyIndicatorsQuery(selectedId);
   const mutateAsync = useUpdateIndicator();
+
   const [formValues, setFormValues] = useState({});
   const [isListVisible, setListVisible] = useState(true);
   const queryClient = useQueryClient();
@@ -44,20 +47,20 @@ export default function IndicatorSection() {
   }, [data]);
 
   // Update indicator settings
-  function updatedIndicator(indicatorObject, indicatorSettings) {
-    const updated = indicatorObject.settings[0].map((setting, index) => {
+  function updatedIndicator(indicatorObject: Indicator, indicatorSettings: Array<any>) {
+    const updated = indicatorObject.settings[0].map((setting:Array<any>, index: number) => {
       return [setting[0], setting[1], indicatorSettings[index]]; // Update the third element [2] with indicatorSettings[index]
     });
     return updated;
   }
 
   // Handle saving indicator settings
-  function handleSave(indicatorId) {
+  function handleSave(indicatorId: number) {
     const indicatorSettings = Object.keys(formValues[indicatorId]).map(
       (key) => formValues[indicatorId][key]
     );
 
-    const indicatorObject = data.find((indicator) => indicator.id === indicatorId);
+    const indicatorObject = data?.find((indicator) => indicator.id === indicatorId);
 
     let updatedSettings = updatedIndicator(indicatorObject, indicatorSettings);
     indicatorObject.settings[0] = updatedSettings;
@@ -115,7 +118,7 @@ export default function IndicatorSection() {
               >
                 <span className="text-lg">{indicator.kind}</span>
                 <div className="flex flex-row items-center">
-                  {indicator.settings[0].map((setting, settingIndex) => (
+                  {indicator.settings[0].map<Indicator[]>((setting:any, settingIndex:any) => (
                     <div key={settingIndex}>
                       <label className="text-sm font-medium">
                         {setting[0]}{" "}
@@ -138,6 +141,7 @@ export default function IndicatorSection() {
                 >
                   Save Settings
                 </Button>
+                <DeleteIndicatorButton id={indicator.id}></DeleteIndicatorButton>
               </Box>
             ))}
           </List>

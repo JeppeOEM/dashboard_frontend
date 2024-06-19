@@ -1,12 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
 import CoinList from "../components/coinList/ListCoins";
-import { Grid, GridItem, Spinner, Text } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Spinner, Text, useBreakpointValue } from "@chakra-ui/react";
 import useCoinSearchQueryStore from "../stores/coinSearchQueryStore";
 import SearchCoin from "../components/coinList/SearchCoin";
 import SortCoinSelector from "../components/coinList/SortCoinSelector";
 import { useEffect, useState } from "react";
-import usesearchQuery from "../hooks/useCoinQuery";
+
 import useCoinQuery from "../hooks/useCoinQuery";
+import { splitPairName } from "../utils/splitPairName";
 
 export default function CoinListPage() {
   const { data, error, isLoading } = useCoinQuery();
@@ -21,27 +22,35 @@ export default function CoinListPage() {
       setFilteredCoins(data);
     }
   }, [data, searchCoinQuery.searchText]);
+  const templateColumns = useBreakpointValue({ base: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)', lg: 'repeat(8, 1fr)' });
+
   return (
     <>
       {isLoading && <Spinner />}
 
       {error && <div>{error.message}</div>}
 
-      <div className="pb-2 ml-5 mr-5">
-        <SearchCoin ></SearchCoin>
+      <div className="pb-2 mt-5 ml-5 mr-5">
+        <SearchCoin />
       </div>
 
-      <div className="lg:h-screen overflow-auto bg-gray-100 p-4">
-        <ul className="space-y-4">
+      <Box>
+        <Grid templateColumns={templateColumns} gap={5} mt={5} mr={5} ml={5}>
           {filteredCoins?.map((coin) => (
-            <li key={coin.id} className="p-4 hover:bg-gray-300 rounded-lg">
-              <NavLink className="block text-lg font-semibold text-blue-600 hover:text-blue-800" to={`/coins/${coin.name}`}>
-                {coin.name}
+            <GridItem
+              key={coin.id}
+              colSpan={1}
+              bg="blue.500"
+              className="hover:bg-gray-300 rounded-lg"
+            >
+              <NavLink className="block text-lg font-semibold text-black hover:text-blue-800 p-2" to={`/coins/${coin.name}`} replace>
+                {splitPairName(coin.name)}
               </NavLink>
-            </li>
+              
+            </GridItem>
           ))}
-        </ul>
-      </div>
+        </Grid>
+      </Box>
     </>
   );
-}
+};
