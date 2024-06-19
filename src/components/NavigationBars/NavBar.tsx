@@ -90,14 +90,9 @@ const NavBar = () => {
             </Link>
           )}
           <Link to="/coins" className="text-lg">
-            Coin list
+            Market Data
           </Link>
-          <Link to="/dashboard" className="text-lg">
-            Dashboard
-          </Link>
-          <Link to="/home" className="text-lg">
-            Home
-          </Link>
+
         </HStack>
 
         <Flex align="center">
@@ -160,12 +155,7 @@ const NavBar = () => {
         <Link to="/coins" className="text-lg" onClick={handleLinkClick}>
           Coin list
         </Link>
-        <Link to="/dashboard" className="text-lg" onClick={handleLinkClick}>
-          Dashboard
-        </Link>
-        <Link to="/home" className="text-lg" onClick={handleLinkClick}>
-          Home
-        </Link>
+
       </VStack>
     </>
   )

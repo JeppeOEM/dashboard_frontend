@@ -10,7 +10,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import strategyStore from "../../stores/strategyStore";
@@ -23,14 +23,42 @@ export default function IndicatorSection() {
   const { indicatorId } = indicatorStore();
   const { data, error, isLoading } = useStrategyIndicatorsQuery(selectedId);
   const mutateAsync = useUpdateIndicator();
-
+  const [formValues, setFormValues] = useState({});
   const [isListVisible, setListVisible] = useState(true);
   const queryClient = useQueryClient();
+  const inputRefs = useRef({});
+  const indicatorObjectRefs = useRef({});
+  
+
+
+
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["strategyIndicators"] });
     console.log(indicatorId);
   }, [selectedId, indicatorId, queryClient]);
+
+  const handleSave = (indicatorId) => {
+    const indicatorSettings = Object.keys(inputRefs.current[indicatorId]).map(
+      (key) => inputRefs.current[indicatorId][key].value
+    );
+
+    const indicatorObject = data.find((indicator) => indicator.id === indicatorId);
+
+    console.log(indicatorSettings);
+    console.log(indicatorObject);
+    const objSettings = indicatorObject.settings.slice(1);
+
+    const settingsToUpdate = indicatorObject.settings[0].slice(1).map((setting, index) => {
+      return [setting[0], setting[1], indicatorSettings[index]]; // Update the third element [2] with indicatorSettings[index]
+    });
+    console.log("Updated Settings:", settingsToUpdate);
+
+    // Now you have both indicatorSettings and indicatorObject, handle them as needed
+    // Example: mutateAsync({ indicatorId, settings: indicatorSettings });
+
+    return indicatorObject; // Return the indicator object for further handling
+  };
 
   return (
     <>
@@ -72,7 +100,7 @@ export default function IndicatorSection() {
               <span className="text-lg">{indicator.kind}</span>
               <div className="flex flex-row items-center">
                 {/* <div className="flex flex-col space-y-2"> */}
-                {indicator.settings[0].slice(0)
+                {indicator.settings[0].slice(1)
                   .map((setting, settingIndex) => (
                     <div key={settingIndex}>
                       <label className="text-sm font-medium">
@@ -81,11 +109,24 @@ export default function IndicatorSection() {
                       <input
                         type={typeof setting[2]}
                         defaultValue={setting[2]}
+                        ref={(el) => {
+                          if (!inputRefs.current[indicator.id]) {
+                            inputRefs.current[indicator.id] = {};
+                          }
+                          inputRefs.current[indicator.id][settingIndex] = el;
+                        }}
                         className="border-2 border-gray-300 rounded-md p-1 m-1 w-10"
                       />
                     </div>
                   ))}
               </div>
+              <Button
+                  mt={2}
+                  colorScheme="teal"
+                  onClick={() => handleSave(indicator.id)}
+                >
+                  Save Settings
+                </Button>
             </Box>
           ))}
         </List>
@@ -93,4 +134,4 @@ export default function IndicatorSection() {
     )}
   </>
 )
-}
+  }

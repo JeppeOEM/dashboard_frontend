@@ -18,6 +18,7 @@ import SearchCoin from "../coinList/SearchCoin"
 import SortCoinSelector from "../coinList/SortCoinSelector"
 import { useEffect, useState } from "react"
 import priceStore from "../../stores/priceStore"
+import useCoinSearchQueryStore from "../../stores/coinSearchQueryStore"
 import usePriceQuery from "../../hooks/usePriceQuery"
 import { splitPairName } from "../../utils/splitPairName"
 
@@ -25,7 +26,6 @@ export default function CryptoCoinList() {
   const { data: dataCoins, error: errorCoins, isLoading: isLoadingCoins } = useCoinQuery()
   const { setCoinId } = priceStore()
   const [isListVisible, setListVisible] = useState(true)
-
   const borderColor = useColorModeValue('gray.500', 'white');
   const buttonBackgroundColor = useColorModeValue('black', 'white');
   const buttonTextColor = useColorModeValue('white', 'black');
@@ -33,6 +33,20 @@ export default function CryptoCoinList() {
   const listTextColor = useColorModeValue('black', 'white');
   const listBorderColor = useColorModeValue('gray.300', 'gray.500');
   const listItemHoverBgColor = useColorModeValue('gray.300', 'gray.600');
+  const { searchCoinQuery } = useCoinSearchQueryStore();
+
+  const [filteredCoins, setFilteredCoins] = useState([]);
+
+  useEffect(() => {
+    if (searchCoinQuery.searchText) {
+      setFilteredCoins(dataCoins?.filter(coin => coin.name.includes(searchCoinQuery.searchText)));
+    } else {
+      setFilteredCoins(dataCoins);
+    }
+  }, [dataCoins, searchCoinQuery.searchText]);
+
+
+
 
   return (
     <>
@@ -72,7 +86,7 @@ export default function CryptoCoinList() {
               borderRadius="md"
               border={`1px solid ${listBorderColor}`}
             >
-              {dataCoins?.map((coin) => (
+              {filteredCoins?.map((coin) => (
                 <ListItem
                   key={coin.id}
                   py={2}

@@ -3,4 +3,5 @@ export default interface Indicator {
     kind: string
     settings: string
     strategy_fk?: number
+    chart_style: string
 }
