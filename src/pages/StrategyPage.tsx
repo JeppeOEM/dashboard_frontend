@@ -1,27 +1,25 @@
-import { Box, Grid, GridItem, Show, Text, useColorMode } from "@chakra-ui/react"
+import { Box, Button, Grid, GridItem, Show, Text, useColorMode } from "@chakra-ui/react"
 import SideBar from "../components/navigationBars/SideBar"
-import useStrategyQuery from "../hooks/useStrategyQuery"
-import GridDashboard from "../components/GridDashboard/GridDashboard"
 import IndicatorSection from "../components/strategy/IndicatorSection"
 import SelectStratgyPanel from "../components/strategy/SelectStrategyPanel"
 import SelectIndicators from "../components/strategy/SelectIndicators"
 import CryptoCoinList from "../components/strategy/CryptoCoinList"
 import strategyStore from "../stores/strategyStore"
-import { get } from "http"
 import StrategyName from "../components/strategy/StrategyName"
 import { ChartComponent } from "../components/charting/ChartComponent"
 import { useEffect, useState } from "react"
 import priceStore from "../stores/priceStore"
 import usePriceQuery from "../hooks/usePriceQuery"
+import { useDeleteStrategy } from '../hooks/useDeleteStrategy';
 import { Price } from "../models/Price"
-import Timeseries from "../models/Timeseries"
 import { useQueryClient } from "@tanstack/react-query"
 import { darkModeColor } from "../components/charting/darkModeColor"
 import { lightModeColor } from "../components/charting/lightModeColor"
 // import strategyStore from "../stores/strategyStore"
 function StrategyPage() {
-  const {prices, selectedCoinId, results, setPrices, setNext, setPrevious, setResults, setPage, setCoinId, getByCoinId} = priceStore()
+  const {prices, selectedCoinId, results, setNext, setPrevious, setResults} = priceStore()
   const {getById, selectedId} = strategyStore()
+  const mutateAsync = useDeleteStrategy();
   const {data: dataPrices, error: errorPrices, isLoading: isLoadingPrices} = usePriceQuery(selectedCoinId)
   const { colorMode } = useColorMode();
   const colors = colorMode === 'dark' ? darkModeColor : lightModeColor;
@@ -86,10 +84,7 @@ const queryClient = useQueryClient();
 
 useEffect(() => {
   let l = getById(selectedId)
-  console.log("L",l)
   queryClient.invalidateQueries({queryKey: ['coins',selectedCoinId,'prices']});
-  console.log(selectedCoinId)
-  console.log("DATAPRICES",dataPrices)
   if (dataPrices) {
   setNext(dataPrices.next) 
   setPrevious(dataPrices.previous)
@@ -97,9 +92,8 @@ useEffect(() => {
   if (results !== null) {
     // Call dataprices directly as async madness
   const formatedData = formatPriceData(dataPrices.results)
-  console.log("FORMATED DATA",formatedData)
   setChartData(formatedData)
-  console.log("TEEEEST")
+
   }
   
 
@@ -141,7 +135,10 @@ return (
   </GridItem> */}
 
   <GridItem gridArea={"chart"}>
-  <StrategyName></StrategyName>
+    <div className="flex flex-row items-center">
+
+  <StrategyName></StrategyName>{ selectedId ? <Button onClick={()=>{mutateAsync({id: selectedId})}} >Delete Chart</Button> : <></>} 
+    </div>
     <Box className="m-2.5">
       <ChartComponent windowSize={windowSize.width} data={chartData} colors={colors} />
     </Box>

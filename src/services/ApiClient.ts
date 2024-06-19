@@ -10,7 +10,7 @@ const token = storedToken ? JSON.parse(storedToken) : null
 const getCsrfToken = () => {
   const value = ` ${document.cookie}`
   const parts = value.split(` csrftoken=`)
-  if (parts.length === 2) return parts.pop().split('').shift()
+  if (parts.length === 2 ) return parts.pop().split('').shift()
 }
 
 const csrfToken = getCsrfToken()
@@ -56,7 +56,7 @@ class ApiClient<T> {
   }
 
   delete = (id: number) => {
-    return axiosInstance.delete(`${this.endpoint}/${id}`,{headers})
+    return axiosInstance.delete(`${this.endpoint}${id}`,{headers})
   }
 
   update = (id: number, data: T) => {

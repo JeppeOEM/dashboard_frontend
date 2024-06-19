@@ -86,7 +86,7 @@ const NavBar = () => {
         >
           {isAuthenticated && (
             <Link to="/backtest" className="text-lg">
-              Backtest Strategies
+              Charts
             </Link>
           )}
           <Link to="/coins" className="text-lg">

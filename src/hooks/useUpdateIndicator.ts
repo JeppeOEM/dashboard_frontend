@@ -10,7 +10,7 @@ export const useUpdateIndicator = () => {
         IndicatorClient.update(id, newIndicator),
     onSuccess: (updatedIndicator) => {
       console.log("MUTATE", updatedIndicator);
-      queryClient.setQueryData(["strategyIndicators"], (oldIndicators) => 
+      queryClient.setQueryData<Indicator[]>(["strategyIndicators"], (oldIndicators) => 
         oldIndicators?.map(indicator => 
           indicator.id === updatedIndicator.id ? updatedIndicator : indicator
         )

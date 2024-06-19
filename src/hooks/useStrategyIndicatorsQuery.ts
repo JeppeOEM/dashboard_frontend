@@ -3,12 +3,9 @@ import {IndicatorStrategyClient} from "../services/ApiClientInstances"
 import Indicator from "../models/Indicator"
 
 const useStrategyIndicatorQuery = (strategy_fk:number | null) => {
-  console.log("FUUUUUUUUUUUUUUUUUUUCK,",strategy_fk)
   const fetchStrategyIndicators = async (): Promise<Indicator[]> => {
 
-      const indicatorData: Indicator[] = await IndicatorStrategyClient.getSingleParam(strategy_fk, "strategy_fk" )
-      console.log(`Indicator Data!: ${indicatorData}`)
-      
+      const indicatorData: Indicator[] = await IndicatorStrategyClient.getSingleParam(strategy_fk, "strategy_fk" )      
       return indicatorData
     }
   

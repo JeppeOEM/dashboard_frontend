@@ -61,7 +61,7 @@ const CreateStratForm: React.FC<SignUpProps> = ({ onClose }) => {
       />
   
       <Button colorScheme="blue" onClick={handleCreateStrat}>
-        Create strategy
+        Save Chart
       </Button>
     </Stack>
   )
