@@ -28,7 +28,7 @@ export default function CryptoCoinList() {
   const [isListVisible, setListVisible] = useState(true)
   const borderColor = useColorModeValue('gray.500', 'white');
   const buttonBackgroundColor = useColorModeValue('black', 'white');
-  const buttonTextColor = useColorModeValue('white', 'black');
+  const buttonTextColor = useColorModeValue('white', 'black' );
   const listBgColor = useColorModeValue('gray.100', 'gray.700');
   const listTextColor = useColorModeValue('black', 'white');
   const listBorderColor = useColorModeValue('gray.300', 'gray.500');
@@ -59,7 +59,7 @@ export default function CryptoCoinList() {
         backgroundColor={buttonBackgroundColor}
         color={buttonTextColor}
         _hover={{
-          backgroundColor: useColorModeValue('white', 'black'),
+          backgroundColor: useColorModeValue('white', 'black' ),
           color: useColorModeValue('black', 'white')
         }}
       >

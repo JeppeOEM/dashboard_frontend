@@ -13,7 +13,7 @@ const ColorModeSwitch = () => {
           isChecked={colorMode === "dark"}
           onChange={toggleColorMode}
         />
-        {colorMode === 'dark' ? <FaSun size="1.5em"/> : <FaMoon size="1.5em" />}
+        {colorMode === 'dark' ? <FaMoon size="1.5em" /> : <FaSun size="1.5em"/>}
       </HStack>
     </div>
   )

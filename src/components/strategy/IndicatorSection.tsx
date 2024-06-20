@@ -102,8 +102,8 @@ export default function IndicatorSection() {
           marginLeft="5px"
         />
       </Button>
-      {isLoading && <Spinner />}
-      {error && <div>{error.message}</div>}
+      {/* {isLoading && <Spinner />} */}
+      {/* {error && <div>{error.message}</div>} */}
       {isListVisible && (
         <Box>
           <List className="flex flex-row flex-wrap">

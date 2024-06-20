@@ -30,9 +30,9 @@ export default function SelectStrategyPanel() {
   } = useDisclosure()
   const {colorMode} = useColorMode
   const { data, error, isLoading } = useStrategyQuery()
-  const borderColor = useColorModeValue('gray.500', 'white');
+  const listBorderColor = useColorModeValue('black', 'white');
   const buttonBackgroundColor = useColorModeValue('black', 'white');
-  const buttonTextColor = useColorModeValue('white', 'black');
+  const buttonTextColor = useColorModeValue('white', 'black' );
   const listColor = useColorModeValue('teal', 'grey');
   const listBgColor = useColorModeValue('gray.100', 'gray.700');
   const listTextColor = useColorModeValue('black', 'white');
@@ -60,7 +60,7 @@ export default function SelectStrategyPanel() {
         mb={3}
         mt={3}
         _hover={{
-          backgroundColor: useColorModeValue('white', 'black'),
+          backgroundColor: useColorModeValue('white', 'black' ),
           color: useColorModeValue('black', 'white')
         }}
       >
@@ -68,13 +68,15 @@ export default function SelectStrategyPanel() {
       </Button>
       {isLoading && <Spinner />}
       <Button
+        mb={3}
+    
         onClick={() => setListVisible(!isListVisible)}
         width="100%"
         border="none"
         backgroundColor={buttonBackgroundColor}
         color={buttonTextColor}
         _hover={{
-          backgroundColor: useColorModeValue('white', 'black'),
+          backgroundColor: useColorModeValue('white', 'black' ),
           color: useColorModeValue('black', 'white')
         }}
       >
@@ -106,10 +108,11 @@ export default function SelectStrategyPanel() {
             className="overflow-auto"
             color={listTextColor}
             borderRadius="md"
-            border="1px solid gray.300"
+            border={`1px solid ${listBorderColor}`}
+            mb={3}
           >
             {data?.map((strategy, index) => (
-              <ListItem
+              <ListItem className="hover:bg-gray-300"
                 key={strategy.id}
                 py={2}
                 px={3}
