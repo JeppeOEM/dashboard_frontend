@@ -83,6 +83,7 @@ const NavBar = () => {
           align="center"
           spacing={4}
           className="space-x-4"
+          mr="auto"
         >
           {isAuthenticated && (
             <Link to="/backtest" className="text-lg">
